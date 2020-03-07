@@ -46,6 +46,9 @@
 <p>2.修改blog/_config.yml文件的theme项，改为新的主题文件夹名new-theme；</p>
 <p>3.此时主题更换完成，在下一次部署时就会生效，主题个性化定制可通过修改主题跟目录下的_config.yml文件实现。</p>
 ]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
       <tags>
         <tag>Hexo</tag>
       </tags>
