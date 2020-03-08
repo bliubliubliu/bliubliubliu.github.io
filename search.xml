@@ -44,7 +44,7 @@
 
 <p>此后可以在“账户名.github.io”访问部署到Github的博客。</p>
 <hr>
-<h2 id="更换主题"><a href="#更换主题" class="headerlink" title="更换主题"></a>更换主题</h2><p>1.下载主题包解压到blog/themes/new-theme里；</p>
+<h2 id="更换主题"><a href="#更换主题" class="headerlink" title="更换主题"></a>更换主题</h2><p>1.从github下载主题包解压到blog/themes/new-theme里；</p>
 <p>2.修改blog/_config.yml文件的theme项，改为新的主题文件夹名new-theme；</p>
 <p>3.此时主题更换完成，在下一次部署时就会生效，主题个性化定制可通过修改主题跟目录下的_config.yml文件实现。</p>
 ]]></content>
