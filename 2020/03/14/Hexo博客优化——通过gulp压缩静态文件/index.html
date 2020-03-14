@@ -20,21 +20,22 @@
     var CONFIG = {"hostname":"leifyan.gitee.io","root":"/","scheme":"Mist","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="前期准备1.注册Github账号2.下载nodejs+Git官方安装包3.保证网络畅通">
+  <meta name="description" content="1.安装gulp依赖1.在电脑的Hexo博客目录右键“Git Bash Here”，执行下面的命令安装gulp：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo+Github博客搭建流程(win)">
-<meta property="og:url" content="https://leifyan.gitee.io/2020/02/25/Hexo-Github%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%B5%81%E7%A8%8B(win)/">
+<meta property="og:title" content="Hexo博客优化——通过gulp压缩静态文件">
+<meta property="og:url" content="https://leifyan.gitee.io/2020/03/14/Hexo%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96%E2%80%94%E2%80%94%E9%80%9A%E8%BF%87gulp%E5%8E%8B%E7%BC%A9%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6/">
 <meta property="og:site_name" content="Leif的博客">
-<meta property="og:description" content="前期准备1.注册Github账号2.下载nodejs+Git官方安装包3.保证网络畅通">
+<meta property="og:description" content="1.安装gulp依赖1.在电脑的Hexo博客目录右键“Git Bash Here”，执行下面的命令安装gulp：">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-02-25T10:15:46.000Z">
-<meta property="article:modified_time" content="2020-03-14T11:00:26.209Z">
+<meta property="article:published_time" content="2020-03-14T10:56:30.000Z">
+<meta property="article:modified_time" content="2020-03-14T11:17:54.352Z">
 <meta property="article:author" content="Leif">
 <meta property="article:tag" content="Hexo">
-<meta property="article:tag" content="博客搭建">
+<meta property="article:tag" content="优化">
+<meta property="article:tag" content="gulp">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://leifyan.gitee.io/2020/02/25/Hexo-Github%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%B5%81%E7%A8%8B(win)/">
+<link rel="canonical" href="https://leifyan.gitee.io/2020/03/14/Hexo%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96%E2%80%94%E2%80%94%E9%80%9A%E8%BF%87gulp%E5%8E%8B%E7%BC%A9%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6/">
 
 
 <script id="page-configurations">
@@ -46,7 +47,7 @@
   };
 </script>
 
-  <title>Hexo+Github博客搭建流程(win) | Leif的博客</title>
+  <title>Hexo博客优化——通过gulp压缩静态文件 | Leif的博客</title>
   
 
 
@@ -186,7 +187,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://leifyan.gitee.io/2020/02/25/Hexo-Github%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%B5%81%E7%A8%8B(win)/">
+    <link itemprop="mainEntityOfPage" href="https://leifyan.gitee.io/2020/03/14/Hexo%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96%E2%80%94%E2%80%94%E9%80%9A%E8%BF%87gulp%E5%8E%8B%E7%BC%A9%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/sheep.PNG">
@@ -199,7 +200,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hexo+Github博客搭建流程(win)
+          Hexo博客优化——通过gulp压缩静态文件
         </h1>
 
         <div class="post-meta">
@@ -208,16 +209,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-02-25 18:15:46" itemprop="dateCreated datePublished" datetime="2020-02-25T18:15:46+08:00">2020-02-25</time>
+              <time title="创建时间：2020-03-14 18:56:30 / 修改时间：19:17:54" itemprop="dateCreated datePublished" datetime="2020-03-14T18:56:30+08:00">2020-03-14</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-14 19:00:26" itemprop="dateModified" datetime="2020-03-14T19:00:26+08:00">2020-03-14</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -234,14 +229,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>984</span>
+              <span>3.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -253,49 +248,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><h3 id="1-注册Github账号"><a href="#1-注册Github账号" class="headerlink" title="1.注册Github账号"></a>1.注册Github账号</h3><h3 id="2-下载nodejs-Git官方安装包"><a href="#2-下载nodejs-Git官方安装包" class="headerlink" title="2.下载nodejs+Git官方安装包"></a>2.下载nodejs+Git官方安装包</h3><h3 id="3-保证网络畅通"><a href="#3-保证网络畅通" class="headerlink" title="3.保证网络畅通"></a>3.保证网络畅通</h3><a id="more"></a>
+        <h3 id="1-安装gulp依赖"><a href="#1-安装gulp依赖" class="headerlink" title="1.安装gulp依赖"></a>1.安装gulp依赖</h3><p>1.在电脑的Hexo博客目录右键“Git Bash Here”，执行下面的命令安装gulp：</p>
+<a id="more"></a>
 
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm insatll gulp</span><br></pre></td></tr></table></figure>
+
+<p>2.再执行下面的命令，安装所需的gulp模块：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">npm install gulp-concat</span><br><span class="line">npm install gulp-htmlclean</span><br><span class="line">npm install gulp-htmlmin&quot;</span><br><span class="line">npm install gulp-imagemin</span><br><span class="line">npm install gulp-minify-css</span><br><span class="line">npm install gulp-uglify</span><br></pre></td></tr></table></figure>
+
+<p>注意：由于同时安装可能安装失败，这里对每个模块分开安装，安装失败时重新执行命令即可。</p>
 <hr>
-<h2 id="搭建与发布"><a href="#搭建与发布" class="headerlink" title="搭建与发布"></a>搭建与发布</h2><h3 id="1-安装nodejs和Git"><a href="#1-安装nodejs和Git" class="headerlink" title="1.安装nodejs和Git"></a>1.安装nodejs和Git</h3><h3 id="2-以管理员的方式运行CMD进行下面的操作"><a href="#2-以管理员的方式运行CMD进行下面的操作" class="headerlink" title="2.以管理员的方式运行CMD进行下面的操作"></a>2.以管理员的方式运行CMD进行下面的操作</h3><p>1.首先给npm换源</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry https:&#x2F;&#x2F;registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+<h3 id="2-配置"><a href="#2-配置" class="headerlink" title="2.配置"></a>2.配置</h3><p>在博客根目录新建文件gulp.js，写入以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">var gulp &#x3D; require(&#39;gulp&#39;),</span><br><span class="line">    uglify &#x3D; require(&#39;gulp-uglify&#39;),</span><br><span class="line">    cssmin &#x3D; require(&#39;gulp-minify-css&#39;),</span><br><span class="line">    imagemin &#x3D; require(&#39;gulp-imagemin&#39;),</span><br><span class="line">    htmlmin &#x3D; require(&#39;gulp-htmlmin&#39;),</span><br><span class="line">    htmlclean &#x3D; require(&#39;gulp-htmlclean&#39;);</span><br><span class="line">concat &#x3D; require(&#39;gulp-concat&#39;);</span><br><span class="line">&#x2F;&#x2F;JS压缩</span><br><span class="line">gulp.task(&#39;uglify&#39;, function() &#123;</span><br><span class="line">    return gulp.src([&#39;.&#x2F;public&#x2F;js&#x2F;**&#x2F;.js&#39;, &#39;!.&#x2F;public&#x2F;js&#x2F;**&#x2F;*min.js&#39;]) &#x2F;&#x2F;只是排除min.js文件还是不严谨，一般不会有问题，根据自己博客的修改我的修改为return gulp.src([&#39;.&#x2F;public&#x2F;**&#x2F;*.js&#39;,&#39;!.&#x2F;public&#x2F;zuoxi&#x2F;**&#x2F;*.js&#39;,,&#39;!.&#x2F;public&#x2F;radio&#x2F;**&#x2F;*.js&#39;])</span><br><span class="line">        .pipe(uglify())</span><br><span class="line">        .pipe(gulp.dest(&#39;.&#x2F;public&#x2F;js&#39;)); &#x2F;&#x2F;对应修改为.&#x2F;public即可</span><br><span class="line">&#125;);</span><br><span class="line">&#x2F;&#x2F;public-fancybox-js压缩</span><br><span class="line">gulp.task(&#39;fancybox:js&#39;, function() &#123;</span><br><span class="line">    return gulp.src(&#39;.&#x2F;public&#x2F;vendors&#x2F;fancybox&#x2F;source&#x2F;jquery.fancybox.js&#39;)</span><br><span class="line">        .pipe(uglify())</span><br><span class="line">        .pipe(gulp.dest(&#39;.&#x2F;public&#x2F;vendors&#x2F;fancybox&#x2F;source&#x2F;&#39;));</span><br><span class="line">&#125;);</span><br><span class="line">&#x2F;&#x2F; 合并 JS</span><br><span class="line">gulp.task(&#39;jsall&#39;, function() &#123;</span><br><span class="line">    return gulp.src(&#39;.&#x2F;public&#x2F;**&#x2F;*.js&#39;)</span><br><span class="line">        &#x2F;&#x2F; 压缩后重命名</span><br><span class="line">        .pipe(concat(&#39;app.js&#39;))</span><br><span class="line">        .pipe(gulp.dest(&#39;.&#x2F;public&#39;));</span><br><span class="line">&#125;);</span><br><span class="line">&#x2F;&#x2F;public-fancybox-css压缩</span><br><span class="line">gulp.task(&#39;fancybox:css&#39;, function() &#123;</span><br><span class="line">    return gulp.src(&#39;.&#x2F;public&#x2F;vendors&#x2F;fancybox&#x2F;source&#x2F;jquery.fancybox.css&#39;)</span><br><span class="line">        .pipe(cssmin())</span><br><span class="line">        .pipe(gulp.dest(&#39;.&#x2F;public&#x2F;vendors&#x2F;fancybox&#x2F;source&#x2F;&#39;));</span><br><span class="line">&#125;);</span><br><span class="line">&#x2F;&#x2F;CSS压缩</span><br><span class="line">gulp.task(&#39;cssmin&#39;, function() &#123;</span><br><span class="line">    return gulp.src([&#39;.&#x2F;public&#x2F;css&#x2F;main.css&#39;, &#39;!.&#x2F;public&#x2F;css&#x2F;*min.css&#39;])</span><br><span class="line">        .pipe(cssmin())</span><br><span class="line">        .pipe(gulp.dest(&#39;.&#x2F;public&#x2F;css&#x2F;&#39;));</span><br><span class="line">&#125;);</span><br><span class="line">&#x2F;&#x2F;图片压缩</span><br><span class="line">gulp.task(&#39;images&#39;, function() &#123;</span><br><span class="line">    gulp.src(&#39;.&#x2F;public&#x2F;images&#x2F;*.*&#39;)</span><br><span class="line">        .pipe(imagemin(&#123;</span><br><span class="line">            progressive: false</span><br><span class="line">        &#125;))</span><br><span class="line">        .pipe(gulp.dest(&#39;.&#x2F;public&#x2F;images&#x2F;&#39;));</span><br><span class="line">&#125;);</span><br><span class="line">&#x2F;&#x2F; 压缩 public 目录 html文件 public&#x2F;**&#x2F;*.hmtl 表示public下所有文件夹中html，包括当前目录</span><br><span class="line">gulp.task(&#39;minify-html&#39;, function() &#123;</span><br><span class="line">    return gulp.src(&#39;.&#x2F;public&#x2F;**&#x2F;*.html&#39;)</span><br><span class="line">        .pipe(htmlclean())</span><br><span class="line">        .pipe(htmlmin(&#123;</span><br><span class="line">            removeComments: true,</span><br><span class="line">            minifyJS: true,</span><br><span class="line">            minifyCSS: true,</span><br><span class="line">            minifyURLs: true,</span><br><span class="line">        &#125;))</span><br><span class="line">        .pipe(gulp.dest(&#39;.&#x2F;public&#39;))</span><br><span class="line">&#125;);</span><br><span class="line">gulp.task(&#39;build&#39;, [&#39;uglify&#39;, &#39;cssmin&#39;, &#39;fancybox:js&#39;, &#39;fancybox:css&#39;, &#39;jsall&#39;, &#39;images&#39;, &#39;minify-html&#39;]);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;, &#39;minify-html&#39;</span><br></pre></td></tr></table></figure>
 
-<p>2.安装hexo-cli</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-
-<p>3.新建一个blog文件夹，在这个文件夹下选择鼠标右键的Git Bash Here命令，初始化hexo在blog文件夹生成本地博客系统，在git bash下输入命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
-
-<p>注意：这里如果失败，要把blog文件夹清空，再重复初始化操作。</p>
-<p>4.安装hexo-deployer-git组件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-在Github账户上新建一个repository，其名称要与Github账户名相同"><a href="#3-在Github账户上新建一个repository，其名称要与Github账户名相同" class="headerlink" title="3.在Github账户上新建一个repository，其名称要与Github账户名相同"></a>3.在Github账户上新建一个repository，其名称要与Github账户名相同</h3><h3 id="4-修改博客系统的配置文件blog-config-yml"><a href="#4-修改博客系统的配置文件blog-config-yml" class="headerlink" title="4.修改博客系统的配置文件blog/_config.yml"></a>4.修改博客系统的配置文件blog/_config.yml</h3><p>找到最后的deploy项，改成下面这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https:&#x2F;&#x2F;github.com&#x2F;账户名&#x2F;账户名.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-
-<p>注意：冒号与后面的字符之间要留一个空格。</p>
-<p>至此hexo博客基本搭建完成，可以顺利发布博客了。</p>
-<h3 id="5-在blog文件夹下用git-bash执行以下命令发布博客"><a href="#5-在blog文件夹下用git-bash执行以下命令发布博客" class="headerlink" title="5.在blog文件夹下用git bash执行以下命令发布博客"></a>5.在blog文件夹下用git bash执行以下命令发布博客</h3><p>1.新建博客文章</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo n &quot;文章名&quot;</span><br></pre></td></tr></table></figure>
-
-<p>该命令在blog/source/_posts/下生成”文章名.md“文件，可以用编辑器在里面先写好文章</p>
-<p>2.执行清理命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
-
-<p>3.执行生成命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
-
-<p>4.本地预览</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-<p>此后可以在“localhost:4000”访问本地博客。</p>
-<p>5.部署到Github</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>此后可以在“账户名.github.io”访问部署到Github的博客。</p>
-<hr>
-<h2 id="更换主题"><a href="#更换主题" class="headerlink" title="更换主题"></a>更换主题</h2><p>1.从github下载主题包解压到blog/themes/new-theme里；</p>
-<p>2.修改blog/_config.yml文件的theme项，改为新的主题文件夹名new-theme；</p>
-<p>3.此时主题更换完成，在下一次部署时就会生效，主题个性化定制可通过修改主题跟目录下的_config.yml文件实现。</p>
+<p>保存，配置完成，下次生成时，会自动压缩博客静态文件，优化博客访问速度。</p>
 
     </div>
 
@@ -331,7 +297,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://leifyan.gitee.io/2020/02/25/Hexo-Github%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%B5%81%E7%A8%8B(win)/" title="Hexo+Github博客搭建流程(win)">https://leifyan.gitee.io/2020/02/25/Hexo-Github博客搭建流程(win)/</a>
+    <a href="https://leifyan.gitee.io/2020/03/14/Hexo%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96%E2%80%94%E2%80%94%E9%80%9A%E8%BF%87gulp%E5%8E%8B%E7%BC%A9%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6/" title="Hexo博客优化——通过gulp压缩静态文件">https://leifyan.gitee.io/2020/03/14/Hexo博客优化——通过gulp压缩静态文件/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -363,7 +329,8 @@
           
           <div class="post-tags">
               <a href="/tags/Hexo/" rel="tag"><i class="fa fa-tag"></i> Hexo</a>
-              <a href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="tag"><i class="fa fa-tag"></i> 博客搭建</a>
+              <a href="/tags/%E4%BC%98%E5%8C%96/" rel="tag"><i class="fa fa-tag"></i> 优化</a>
+              <a href="/tags/gulp/" rel="tag"><i class="fa fa-tag"></i> gulp</a>
           </div>
 
         
@@ -372,13 +339,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/02/25/hello-world/" rel="prev" title="Hello World">
-      <i class="fa fa-chevron-left"></i> Hello World
+    <a href="/2020/02/25/Hexo-Github%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%B5%81%E7%A8%8B(win)/" rel="prev" title="Hexo+Github博客搭建流程(win)">
+      <i class="fa fa-chevron-left"></i> Hexo+Github博客搭建流程(win)
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/03/14/Hexo%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96%E2%80%94%E2%80%94%E9%80%9A%E8%BF%87gulp%E5%8E%8B%E7%BC%A9%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6/" rel="next" title="Hexo博客优化——通过gulp压缩静态文件">
-      Hexo博客优化——通过gulp压缩静态文件 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -438,7 +402,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前期准备"><span class="nav-number">1.</span> <span class="nav-text">前期准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-注册Github账号"><span class="nav-number">1.1.</span> <span class="nav-text">1.注册Github账号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-下载nodejs-Git官方安装包"><span class="nav-number">1.2.</span> <span class="nav-text">2.下载nodejs+Git官方安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-保证网络畅通"><span class="nav-number">1.3.</span> <span class="nav-text">3.保证网络畅通</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建与发布"><span class="nav-number">2.</span> <span class="nav-text">搭建与发布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-安装nodejs和Git"><span class="nav-number">2.1.</span> <span class="nav-text">1.安装nodejs和Git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-以管理员的方式运行CMD进行下面的操作"><span class="nav-number">2.2.</span> <span class="nav-text">2.以管理员的方式运行CMD进行下面的操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-在Github账户上新建一个repository，其名称要与Github账户名相同"><span class="nav-number">2.3.</span> <span class="nav-text">3.在Github账户上新建一个repository，其名称要与Github账户名相同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-修改博客系统的配置文件blog-config-yml"><span class="nav-number">2.4.</span> <span class="nav-text">4.修改博客系统的配置文件blog&#x2F;_config.yml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-在blog文件夹下用git-bash执行以下命令发布博客"><span class="nav-number">2.5.</span> <span class="nav-text">5.在blog文件夹下用git bash执行以下命令发布博客</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更换主题"><span class="nav-number">3.</span> <span class="nav-text">更换主题</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-安装gulp依赖"><span class="nav-number">1.</span> <span class="nav-text">1.安装gulp依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-配置"><span class="nav-number">2.</span> <span class="nav-text">2.配置</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
