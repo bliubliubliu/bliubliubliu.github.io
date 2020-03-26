@@ -46,7 +46,7 @@
 <p>4.安装hexo-deployer-git组件</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure>
 
-<h3 id="3-在Github账户上新建一个repository，其名称要与Github账户名相同"><a href="#3-在Github账户上新建一个repository，其名称要与Github账户名相同" class="headerlink" title="3.在Github账户上新建一个repository，其名称要与Github账户名相同"></a>3.在Github账户上新建一个repository，其名称要与Github账户名相同</h3><h3 id="4-修改博客系统的配置文件blog-config-yml"><a href="#4-修改博客系统的配置文件blog-config-yml" class="headerlink" title="4.修改博客系统的配置文件blog/_config.yml"></a>4.修改博客系统的配置文件blog/_config.yml</h3><p>找到最后的deploy项，改成下面这样：</p>
+<h3 id="3-在Github账户上新建一个repository，其名称要与Github账户名相同"><a href="#3-在Github账户上新建一个repository，其名称要与Github账户名相同" class="headerlink" title="3.在Github账户上新建一个repository，其名称要与Github账户名相同"></a>3.在Github账户上新建一个repository，其名称要与Github账户名相同</h3><h3 id="4-修改博客系统的配置文件blog-config-yml"><a href="#4-修改博客系统的配置文件blog-config-yml" class="headerlink" title="4.修改博客系统的配置文件blog/_config.yml"></a>4.修改博客系统的配置文件blog/_config.yml</h3><p>找到最后的deploy项，将上一步新建的repository的地址复制过来作为repo项，即改成下面这样：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https:&#x2F;&#x2F;github.com&#x2F;账户名&#x2F;账户名.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
 
 <p>注意：冒号与后面的字符之间要留一个空格。</p>
