@@ -7,6 +7,8 @@
 <p>DB:数据仓库;    </p>
 <p>DBMS：数据库管理系统，MySQL，Oracle，DB2，SqlServer；</p>
 <p>SQL:    结构化查询语言，用于与数据库通信的语言，是几乎所有主流数据库软件的通用语言。</p>
+<a id="more"></a>
+
 <h4 id="数据库特点"><a href="#数据库特点" class="headerlink" title="数据库特点:"></a>数据库特点:</h4><p>1.将数据放到表中，把表放到库中</p>
 <p>2.表类似于类，有自己的属性，各列（字段）就相当于属性</p>
 <h4 id="DBMS分两类"><a href="#DBMS分两类" class="headerlink" title="DBMS分两类:"></a>DBMS分两类:</h4><p>1，基于共享文件系统的（Access）</p>
@@ -295,7 +297,7 @@
 <p>2.安装hexo-cli</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
 
-<p><strong>PS:如果之前已经已经搭建过Hexo博客，到这一步就可以结束了，只需要把原来的blog文件夹复制到新的电脑即可。</strong></p>
+<p><strong>PS:如果之前已经已经搭建过Hexo博客，到这一步就可以结束了，只需要把原来的blog文件夹复制到新的电脑即可正常使用原来配置好的Hexo博客系统了。</strong></p>
 <p>3.新建一个blog文件夹，在这个文件夹下选择鼠标右键的Git Bash Here命令，初始化hexo在blog文件夹生成本地博客系统，在git bash下输入命令：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
 
