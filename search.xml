@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Win10下生成ssh公钥</title>
+    <url>/2020/09/01/Win10%E4%B8%8B%E7%94%9F%E6%88%90ssh%E5%85%AC%E9%92%A5/</url>
+    <content><![CDATA[<h5 id="1-打开CMD-输入以下命令"><a href="#1-打开CMD-输入以下命令" class="headerlink" title="1.打开CMD,输入以下命令"></a>1.打开CMD,输入以下命令</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;填一个邮箱&quot;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-可以连续回车不设置密码，生成密钥文件"><a href="#2-可以连续回车不设置密码，生成密钥文件" class="headerlink" title="2.可以连续回车不设置密码，生成密钥文件"></a>2.可以连续回车不设置密码，生成密钥文件</h5><h5 id="3-打开路径”C-username-ssh”中的-pub文件全选复制ssh公钥"><a href="#3-打开路径”C-username-ssh”中的-pub文件全选复制ssh公钥" class="headerlink" title="3.打开路径”C:/username/.ssh”中的.pub文件全选复制ssh公钥"></a>3.打开路径”C:/username/.ssh”中的.pub文件全选复制ssh公钥</h5><h5 id="4-在coding或github等个人账户设置处添加ssh公钥"><a href="#4-在coding或github等个人账户设置处添加ssh公钥" class="headerlink" title="4.在coding或github等个人账户设置处添加ssh公钥"></a>4.在coding或github等个人账户设置处添加ssh公钥</h5><h5 id="5-回到CMD用下面的命令测试不同平台的连接"><a href="#5-回到CMD用下面的命令测试不同平台的连接" class="headerlink" title="5.回到CMD用下面的命令测试不同平台的连接"></a>5.回到CMD用下面的命令测试不同平台的连接</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh -T git@gitee.com</span><br><span class="line">ssh -T git@github.com</span><br><span class="line">ssh -T git@e.coding.net</span><br></pre></td></tr></table></figure>
+
+<p>ps:回车后有询问，键入yes回车，提示成功即可。</p>
+]]></content>
+      <categories>
+        <category>技巧</category>
+      </categories>
+      <tags>
+        <tag>ssh</tag>
+        <tag>win10</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Matlab笔记</title>
     <url>/2020/08/31/Matlab%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<p>【元胞数组cell】对于元胞数组a,a(i,j)表示对元胞数组a的第i行第j列单元(cell)的直接引用，返回结果是cell类型，而a{i,j}表示对元胞数组a的第i行第j列单元(cell)内存储的变量的引用，返回结果的类型与单元内具体变量的类型一致。<br>【关键字end】end表示矩阵某一维度的末尾下标。对于向量相当于length()函数的返回值。<br>【求矩阵的最大元素】A(:)将二维矩阵A的每一个列向量沿纵向从上到下依次排列构成一个新的列向量B,<br>再调用max(B)即可求得A的最大元素<br>更多【特殊图形绘制函数】参见《matiab图像处理超级学习手册》一书的第三章。</p>
