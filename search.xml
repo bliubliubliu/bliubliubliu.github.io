@@ -841,13 +841,61 @@ y: [1×1 sym]   ??？【这里应该有两组解的】</code></pre><blockquote>
 
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#三、修改表时删除已有约束</span><br><span class="line">#1.删除非空约束</span><br><span class="line">ALTER TABLE stuinfo MODIFY COLUMN stuname VARCHAR(20) NULL;</span><br><span class="line">#2.删除默认约束</span><br><span class="line">ALTER TABLE stuinfo MODIFY COLUMN age INT;</span><br><span class="line"></span><br><span class="line">#主键、唯一键、外键约束的删除有所不同，需要借助drop</span><br><span class="line">#3.删除主键，因为主键只有一个，所以不用指定字段名</span><br><span class="line">ALTER TABLE stuinfo DROP PRIMARY KEY;#主键约束删除后，非空约束还在</span><br><span class="line">#4.删除唯一约束</span><br><span class="line">ALTER TABLE stuinfo DROP INDEX seat;#删除的时索引名，不是字段名</span><br><span class="line">#5.删除外键约束</span><br><span class="line">ALTER TABLE stuinfo DROP FOREIGN KEY fk_stuinfo_major;</span><br><span class="line">#ps:删除了外键，但是相应的索引还在。</span><br><span class="line">#外键的删除只能用别名，也就是添加外键时指定的约束别名，但唯一约束就不需要，如果没有指定别名，默认key_name为字段名，这时删除唯一约束可以指定字段名。</span><br></pre></td></tr></table></figure>
 
+<p><em>列级约束与表级约束的比较：</em></p>
+<p>​                位置                        支持的约束类型                                是否可以起约束名</p>
+<p>列级：    列的后面                语法上都支持，但对外键无效        不可以</p>
+<p>表级：    所有列的下面        仅不支持默认、非空                        可以（对主键无效）</p>
+<p><strong>标识列：</strong></p>
+<p>含义：又称为自增长列，可以不用手动插入值，系统提供默认的序列值。</p>
+<p>特点：</p>
+<p>​            1.标识列不一定和主键搭配，但要求是一个key，像主键，唯一，外键等。</p>
+<p>​            2.一个表最多只能有1个标识列</p>
+<p>​            3.标识列的类型只能是数值型（支持自增）</p>
+<p>​            4.标识列可以通过‘SET auto_increment_increment=3;’设置步长，通过手动插入值设置起始值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#创建表时设置标识列</span><br><span class="line">DROP TABLE IF EXISTS tab_identity;</span><br><span class="line">CREATE TABLE tab_identity(</span><br><span class="line">	id INT PRIMARY KEY AUTO_INCREMENT,</span><br><span class="line">	NAME VARCHAR(20)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">INSERT INTO tab_identity VALUE(NULL,&#39;john&#39;);</span><br><span class="line">INSERT INTO tab_identity(NAME) VALUE(&#39;johnson&#39;),(&#39;jan&#39;),(&#39;JK&#39;);</span><br><span class="line">SELECT * FROM tab_identity;</span><br><span class="line"></span><br><span class="line">#可以查看和设置自增长相关参数</span><br><span class="line">SHOW VARIABLES LIKE &#39;%auto_increment%&#39;;</span><br><span class="line">SET auto_increment_increment&#x3D;3;</span><br><span class="line">#MySQL不支持通过修改变量设置起始值，但可以先插入首个值，并指定起始值，之后就可以从这个起始值自增长了。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#修改表时设置标识列</span><br><span class="line">#情况一</span><br><span class="line">CREATE TABLE tab_identity(</span><br><span class="line">	id INT PRIMARY KEY,#创建表时直接定义逐渐</span><br><span class="line">	NAME VARCHAR(20)</span><br><span class="line">);</span><br><span class="line">ALTER TABLE tab_identity MODIFY COLUMN id INT PRIMARY KEY AUTO_INCREMENT;#报错：只能有一个主键</span><br><span class="line">ALTER TABLE tab_identity MODIFY COLUMN id INT AUTO_INCREMENT;#可行</span><br><span class="line"></span><br><span class="line">#情况二</span><br><span class="line">CREATE TABLE tab_identity(</span><br><span class="line">	id INT, #创建表时没定义主键</span><br><span class="line">	NAME VARCHAR(20)</span><br><span class="line">);</span><br><span class="line">ALTER TABLE tab_identity MODIFY COLUMN id INT PRIMARY KEY AUTO_INCREMENT;#可行</span><br><span class="line">ALTER TABLE tab_identity MODIFY COLUMN id INT AUTO_INCREMENT;#报错：Incorrect table definition; there can be only one auto column and it must be defined as a key</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#修改表时删除标识列</span><br><span class="line">#直接在修改时去掉关键字AUTO_INCREMENT即可，但注意不要再加主键约束了，主键约束不会以这种方式被删除</span><br><span class="line">ALTER TABLE tab_identity MODIFY COLUMN id INT;</span><br></pre></td></tr></table></figure>
+
 
 
 <hr>
 <h5 id="TCL学习（事务控制语言）"><a href="#TCL学习（事务控制语言）" class="headerlink" title="TCL学习（事务控制语言）"></a>TCL学习（事务控制语言）</h5><p>事务和事务处理</p>
+<p><strong>事务：</strong></p>
+<p>一个或一组SQL语句组成一个执行单元，单元中的SQL语句是相互依赖的，也就是这个执行单元要么全部执行，要么全部不执行。如果某1条执行失败，则整个单元将会回滚。</p>
+<p><em>了解存储引擎：</em></p>
+<p>​        概念：在mysql中的数据用各种不同的技术存储在文件（或内存）中。</p>
+<p>​        show engines;可以显示DBMS支持的存储引擎。</p>
+<p>​        在mysql中用的最多的存储引擎有：innodb，myisam，memory等。其中innodb支持事务，而myisam，memory等不支持事务。</p>
+<p><strong>事务的ACID特性：</strong></p>
+<p>​        1.原子性(Atomicity)：事务是一个不可分割的工作单位，事务中的操作要么都执行，要么都不执行。</p>
+<p>​        2.一致性(Consistency)：事务必须使数据库从一个一致性状态变换到另外一个一致性状态。</p>
+<p>​        3.隔离性(Isolation)：指一个事务的执行不能被其他事务干扰，即一个事务内部的操作及使用的数据对并发的其他事务是隔离的，并发执行的各个事务之间不能互相 扰。</p>
+<p>​        4.持久性(Durability)：指一个事务一旦被提交，它对数据库中数据的改变就是永久性的，接下来的其他操作和数据库故障不应该对其有任何影响。</p>
+<p><strong>事务的创建：</strong><br><em>隐式事务</em>：事务没有明显的开启和结束的标记<br>比如insert，update，delete语句</p>
+<p><em>显式事务</em>：事务具有明显的开启和结束的标记<br>前提：必须先设置自动提交功能为禁用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SHOW VARIABLES LIKE &#39;autocommit&#39;;#显示开关变量当前状态</span><br><span class="line">SET autocommit&#x3D;0;#修改自动提交功能为关闭状态</span><br><span class="line"></span><br><span class="line">#语法格式：</span><br><span class="line">开启事务的语句；</span><br><span class="line">update 表 set 张三丰的余额&#x3D;500 where name&#x3D;&#39;张三丰&#39;;</span><br><span class="line">update 表 set 郭裹的余额&#x3D;1500 where name&#x3D;&#39;郭裹&#39;;</span><br><span class="line">结束事务的语句；</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#创建事务的步骤</span><br><span class="line"></span><br><span class="line">#步骤1：开启事务</span><br><span class="line">SET autocommit&#x3D;0;</span><br><span class="line">START TRANSACTION;#则此语句是可选的</span><br><span class="line">#步骤2：编写事务中的SQL语句（select,insert,update,delete，没有DDL语句）</span><br><span class="line">语句1；</span><br><span class="line">语句2;</span><br><span class="line">...</span><br><span class="line">#步骤3：结束事务（在应用程序中选择以下合适的语句）</span><br><span class="line">COMMIT;#提交事务</span><br><span class="line">#或者</span><br><span class="line">ROLLBACK;#回滚事务</span><br><span class="line">#ps:事务的原子性是通过实际程序实现的，如果检查完全没有错误，就以&quot;COMMIT;&quot;结束事务，即正常提交，否则以&quot;ROLLBACK;&quot;结束事务，即回滚这个事务。</span><br><span class="line">SAVEPOINT 节点名;#设置保存点,结合rollback使用</span><br><span class="line">...</span><br><span class="line">rollback to 节点名;</span><br><span class="line">#ps:事务中保存点前面的语句被提交生效，而后面语句的被回滚</span><br><span class="line"></span><br><span class="line">#演示SAVEPOINT的使用</span><br></pre></td></tr></table></figure>
+
+<p><strong>3种并发问题：</strong></p>
+<p><em>1.脏读</em>：事务1读取了事务2<strong>更新但未提交</strong>的字段，如果回滚，读取内容就是无效的</p>
+<p><em>2.不可重复读</em>：事务1读取了字段，马上事务2<strong>更新</strong>了该字段，事务1再次读取该字段时，值就不同了</p>
+<p><em>3.幻读</em>：事务1从表中读取了字段，马上事务2在该表中插入了新行，事务1再次读取该表就会多出几行。</p>
+<p>为了避免各种并发问题，数据库系统必须具有隔离并发运行的各个事务的能力。</p>
+<p>一个事务与其他事务隔离的程度称为隔离级别，不同隔离级别对应不同的干扰程度，隔离级别越高，数据一致性越好，并发性越弱。</p>
+<p><strong>MySQL中的事务隔离级别：</strong></p>
+<ol>
+<li>read uncommitted：3种并发问题都可能发生</li>
+<li>read committed：仅仅可以避免脏读</li>
+<li>repeatable read：仅可以避免脏读、不可重复读</li>
+<li>serializable：可以避免全部3种并发问题，任何事务在没有提交之前，其他新的事务的操作都会被强制暂停等待。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#以下均采用CMD的方式连接数据库</span><br><span class="line"></span><br><span class="line">#查看当前的事务隔离级别</span><br><span class="line">select @@tx_isolation;</span><br><span class="line"></span><br><span class="line">#修改为MySQL中最低的事务隔离级别&#39;read uncommitted&#39;</span><br><span class="line">#这个改变仅对当前连接有效</span><br><span class="line">set 【session】 transaction isolation level read uncommitted; </span><br><span class="line">#ps:session最好加上，不加不能立即生效</span><br><span class="line">#ps:要想隔离级别按照预想发挥作用，每个连接都要设置为相同的隔离级别</span><br><span class="line"></span><br><span class="line">#关闭自动提交</span><br><span class="line">set autocommit&#x3D;0; #这个改变仅对当前连接有效</span><br><span class="line"></span><br><span class="line">#ps:如果出现汉字显示异常或者汉字输入异常，可以把字符集改成gbk,方法如下</span><br><span class="line">set names gbk; #这个改变仅对当前连接有效</span><br><span class="line"></span><br><span class="line">#修改事务隔离级别为&#39;read committed&#39;</span><br><span class="line">set session transaction isolation level read committed;</span><br><span class="line"></span><br><span class="line">#修改事务隔离级别为&#39;repeatable read&#39;</span><br><span class="line">set session transaction isolation level repeatable read;</span><br><span class="line"></span><br><span class="line">#修改事务隔离级别为&#39;serializable&#39;</span><br><span class="line">set session transaction isolation level serializable;</span><br></pre></td></tr></table></figure>
+
 <hr>
-<h5 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h5><hr>
-]]></content>
+<h5 id=""><a href="#" class="headerlink" title=""></a></h5>]]></content>
       <categories>
         <category>MySQL</category>
       </categories>
