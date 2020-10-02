@@ -20,21 +20,22 @@
     var CONFIG = {"hostname":"leifyan.gitee.io","root":"/","scheme":"Mist","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="前期准备1.注册Github账号2.下载nodejs+Git官方安装包3.保证网络畅通">
+  <meta name="description" content="1、安装CUDA 安装CUDA前需要先安装好Visual Studio 2013；  通过控制面板-&gt;硬件和声音-&gt;NVIDIA控制面板-&gt;帮助-&gt;系统信息-&gt;组件-&gt;3D设置-&gt;NVCUDA.DLL对应的产品名称，查看本机对应的CUDA版本，然后下载对应版本的CUDA；">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo+Github博客搭建流程(win)">
-<meta property="og:url" content="https://leifyan.gitee.io/2020/02/25/Hexo-Github%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%B5%81%E7%A8%8B(win)/">
+<meta property="og:title" content="Caffe安装(Win10+GPU)">
+<meta property="og:url" content="https://leifyan.gitee.io/2020/10/02/Caffe%E5%AE%89%E8%A3%85-Win10-GPU/">
 <meta property="og:site_name" content="Leif的博客">
-<meta property="og:description" content="前期准备1.注册Github账号2.下载nodejs+Git官方安装包3.保证网络畅通">
+<meta property="og:description" content="1、安装CUDA 安装CUDA前需要先安装好Visual Studio 2013；  通过控制面板-&gt;硬件和声音-&gt;NVIDIA控制面板-&gt;帮助-&gt;系统信息-&gt;组件-&gt;3D设置-&gt;NVCUDA.DLL对应的产品名称，查看本机对应的CUDA版本，然后下载对应版本的CUDA；">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-02-25T10:15:46.000Z">
-<meta property="article:modified_time" content="2020-08-29T14:19:32.133Z">
+<meta property="article:published_time" content="2020-10-02T01:54:26.000Z">
+<meta property="article:modified_time" content="2020-10-02T11:20:18.872Z">
 <meta property="article:author" content="Leif">
-<meta property="article:tag" content="Hexo">
-<meta property="article:tag" content="博客搭建">
+<meta property="article:tag" content="Caffe">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="Win10">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://leifyan.gitee.io/2020/02/25/Hexo-Github%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%B5%81%E7%A8%8B(win)/">
+<link rel="canonical" href="https://leifyan.gitee.io/2020/10/02/Caffe%E5%AE%89%E8%A3%85-Win10-GPU/">
 
 
 <script id="page-configurations">
@@ -46,7 +47,7 @@
   };
 </script>
 
-  <title>Hexo+Github博客搭建流程(win) | Leif的博客</title>
+  <title>Caffe安装(Win10+GPU) | Leif的博客</title>
   
 
 
@@ -186,7 +187,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://leifyan.gitee.io/2020/02/25/Hexo-Github%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%B5%81%E7%A8%8B(win)/">
+    <link itemprop="mainEntityOfPage" href="https://leifyan.gitee.io/2020/10/02/Caffe%E5%AE%89%E8%A3%85-Win10-GPU/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/sheep.PNG">
@@ -199,7 +200,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hexo+Github博客搭建流程(win)
+          Caffe安装(Win10+GPU)
         </h1>
 
         <div class="post-meta">
@@ -208,23 +209,17 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-02-25 18:15:46" itemprop="dateCreated datePublished" datetime="2020-02-25T18:15:46+08:00">2020-02-25</time>
+              <time title="创建时间：2020-10-02 09:54:26 / 修改时间：19:20:18" itemprop="dateCreated datePublished" datetime="2020-10-02T09:54:26+08:00">2020-10-02</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-29 22:19:32" itemprop="dateModified" datetime="2020-08-29T22:19:32+08:00">2020-08-29</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a>
+                  <a href="/categories/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">安装教程</span></a>
                 </span>
             </span>
 
@@ -234,14 +229,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
+              <span>3.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -253,50 +248,82 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><h3 id="1-注册Github账号"><a href="#1-注册Github账号" class="headerlink" title="1.注册Github账号"></a>1.注册Github账号</h3><h3 id="2-下载nodejs-Git官方安装包"><a href="#2-下载nodejs-Git官方安装包" class="headerlink" title="2.下载nodejs+Git官方安装包"></a>2.下载nodejs+Git官方安装包</h3><h3 id="3-保证网络畅通"><a href="#3-保证网络畅通" class="headerlink" title="3.保证网络畅通"></a>3.保证网络畅通</h3><a id="more"></a>
+        <h3 id="1、安装CUDA"><a href="#1、安装CUDA" class="headerlink" title="1、安装CUDA"></a>1、安装CUDA</h3><ol>
+<li><p>安装CUDA前需要先安装好Visual Studio 2013；</p>
+</li>
+<li><p>通过控制面板-&gt;硬件和声音-&gt;NVIDIA控制面板-&gt;帮助-&gt;系统信息-&gt;组件-&gt;3D设置-&gt;NVCUDA.DLL对应的产品名称，查看本机对应的CUDA版本，然后下载对应版本的CUDA；</p>
+</li>
+</ol>
+<a id="more"></a>
 
-<hr>
-<h2 id="搭建与发布"><a href="#搭建与发布" class="headerlink" title="搭建与发布"></a>搭建与发布</h2><h3 id="1-安装nodejs和Git"><a href="#1-安装nodejs和Git" class="headerlink" title="1.安装nodejs和Git"></a>1.安装nodejs和Git</h3><h3 id="2-以管理员的方式运行CMD进行下面的操作"><a href="#2-以管理员的方式运行CMD进行下面的操作" class="headerlink" title="2.以管理员的方式运行CMD进行下面的操作"></a>2.以管理员的方式运行CMD进行下面的操作</h3><p>1.首先给npm换源</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry https:&#x2F;&#x2F;registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><p>下载地址：<a href="https://developer.nvidia.com/cuda-downloads" target="_blank" rel="noopener">https://developer.nvidia.com/cuda-downloads</a></p>
+</li>
+<li><p>确保安装了Visual Studio 2013后，再安装CUDA。</p>
+</li>
+<li><p>安装完成后，把CUDA的安装目录（比如我的就是C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0）下的bin和lib\x64地址添加到Path环境变量中。</p>
+</li>
+</ol>
+<h3 id="2、安装cuDNN"><a href="#2、安装cuDNN" class="headerlink" title="2、安装cuDNN"></a>2、安装cuDNN</h3><ol>
+<li><p>根据CUDA的版本下载对应版本的的cuDNN（需要注册NVIDIA开发者账户）；</p>
+</li>
+<li><p>下载地址：<a href="https://developer.nvidia.com/rdp/cudnn-download" target="_blank" rel="noopener">https://developer.nvidia.com/rdp/cudnn-download</a></p>
+</li>
+<li><p>将下载的压缩包解压，把里面的bin,include,lib文件夹拷贝到CUDA的安装目录；</p>
+</li>
+<li><p>CUDA的安装目录下的<strong>extras\CUPTI\libx64</strong>里面的cupti64_80.dll复制到CUDA的安装目录下<strong>bin</strong>中。</p>
+</li>
+</ol>
+<h3 id="3、安装Caffe"><a href="#3、安装Caffe" class="headerlink" title="3、安装Caffe"></a>3、安装Caffe</h3><ol>
+<li><p>下载地址：<a href="https://github.com/Microsoft/caffe" target="_blank" rel="noopener">https://github.com/Microsoft/caffe</a></p>
+</li>
+<li><p>在磁盘任意位置新建文件夹caffe-window，将下载的压缩包解压到caffe-window，把cuDNN压缩包中的cuda文件夹也复制到caffe-window；</p>
+</li>
+<li><p>进入caffe-master\windows，复制CommonSettings.props.example文件，并重命名为CommonSettings.props；</p>
+</li>
+<li><p>以管理员身份运行Visual Studio 2013，打开caffe-master\windows中的Caffe.sln，如果libcaffe和testall加载出现问题，就打开CommonSettings.props修改其中<CudaVersion>为本机安装的版本，再重新打开Caffe.sln；</p>
+</li>
+<li><p>设置libcaffe为启动项目;</p>
+</li>
+<li><p>右键项目libcaffe，定位到属性-&gt;-C/C++-&gt;视警告为错误，把这一项改为“否”；</p>
+</li>
+<li><p>确保编译方式是release，平台是x64，Ctrl+F5开始编译libcaffe;</p>
+<p>ps1:如遇到错误：nuget 基础连接已经关闭:发送时发生错误，新建txt将下面的代码复制进去，保存为.reg文件，双击文件修改注册表即可解决。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Windows Registry Editor Version 5.00</span><br><span class="line"> </span><br><span class="line">[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\.NETFramework\v4.0.30319]</span><br><span class="line">&quot;SchUseStrongCrypto&quot;&#x3D;dword:00000001</span><br><span class="line"> </span><br><span class="line">[HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\.NETFramework\v4.0.30319]</span><br><span class="line">&quot;SchUseStrongCrypto&quot;&#x3D;dword:00000001</span><br></pre></td></tr></table></figure>
 
-<p>2.安装hexo-cli</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<p>ps2:如果出现了error MSB3721错误,问题可能来自于你的cudnn.cpp，这个文件第144行的cudnnSetConvolution2dDescriptor函数里面缺参数，你在这个函数参数里添加一个CUDNN_DATA_DOUBLE编译就过了；</p>
+<p>ps3:error MSB3721错误也可能是因为CommonSettings.props中的这一句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;CudaArchitecture&gt;compute_35,sm_35;compute_52,sm_52&lt;&#x2F;CudaArchitecture&gt;</span><br></pre></td></tr></table></figure>
 
-<p><strong>PS:如果之前已经已经搭建过Hexo博客，到这一步就可以结束了，只需要把原来的blog文件夹复制到新的电脑即可正常使用原来配置好的Hexo博客系统了。</strong></p>
-<p>3.新建一个blog文件夹，在这个文件夹下选择鼠标右键的Git Bash Here命令，初始化hexo在blog文件夹生成本地博客系统，在git bash下输入命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+<p>把里面的的35,52，换成小一点的值，比如20，更详细的参考：</p>
+<p><a href="https://blog.csdn.net/weixin_42370246/article/details/104283021?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase" target="_blank" rel="noopener">https://blog.csdn.net/weixin_42370246/article/details/104283021?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase</a></p>
+</li>
+<li><p>项目生成成功后，caffe-window中会多出一个NugetPackages文件夹，里面是自动下载的一些依赖库，caffe-master中也会多出一个Build文件夹，以后编译成功和运行需要的文件都在Build\x64\Release中；</p>
+</li>
+<li><p>重复第6、7步编译Caffe,编译其他项目也是一样。</p>
+<p>ps:这里编译可以对Caffe项目点击右键-&gt;仅用于项目-&gt;仅生成Caffe。如果点击生成，会重新生成一次libcaffe，这时也不要取消，如果取消，可能会出现错误:无法打开输入文件“libcaffe.lib”，这个只要重新生成libcaffe项目即可解决。</p>
+</li>
+</ol>
+<h3 id="4、测试"><a href="#4、测试" class="headerlink" title="4、测试"></a>4、测试</h3><ol>
+<li><p>按照上面说的方法编译convert_mnist_data项目；</p>
+</li>
+<li><p>下载mnist数据集：<a href="http://yann.lecun.com/exdb/mnist/" target="_blank" rel="noopener">http://yann.lecun.com/exdb/mnist/</a></p>
+</li>
+<li><p>把数据集解压到caffe-window\caffe-master\data\mnist</p>
+</li>
+<li><p>在caffe-master中新建mnist_data_convert.bat文件用来转换mnist数据，在该文件中添加以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Build\x64\Release\convert_mnist_data --backend&#x3D;lmdb data\mnist\train-images-idx3-ubyte\train-images.idx3-ubyte data\mnist\train-labels-idx1-ubyte\train-labels.idx1-ubyte examples\mnist\mnist_train_lmdb</span><br><span class="line"></span><br><span class="line">Build\x64\Release\convert_mnist_data --backend&#x3D;lmdb data\mnist\t10k-images-idx3-ubyte\t10k-images.idx3-ubyte data\mnist\t10k-labels-idx1-ubyte\t10k-labels.idx1-ubyte examples\mnist\mnist_test_lmdb</span><br><span class="line"></span><br><span class="line">Pause</span><br></pre></td></tr></table></figure>
 
-<p>注意：这里如果失败，要把blog文件夹清空，再重复初始化操作。</p>
-<p>4.安装hexo-deployer-git组件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure>
+<p>保存bat文件后双击运行，就可以把mnist数据集转换成caffe能够读取的形式；</p>
+<p>ps:注意命令中的路径要跟自己的匹配，如果出现错误Check failed: _mkdir(source.c_str()) == 0 (-1 vs. 0)，可能是因为caffe-master\examples\mnist\下已经存在了mnist_train_lmdb和mnist_test_lmdb文件夹，把它们删除即可解决。</p>
+</li>
+<li><p>在caffe-master中新建mnist_test_run.bat.bat文件，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Build\x64\Release\caffe.exe  train --solver&#x3D;examples\mnist\lenet_solver_adam.prototxt</span><br><span class="line"></span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
 
-<h3 id="3-在Github账户上新建一个repository，其名称要与Github账户名相同"><a href="#3-在Github账户上新建一个repository，其名称要与Github账户名相同" class="headerlink" title="3.在Github账户上新建一个repository，其名称要与Github账户名相同"></a>3.在Github账户上新建一个repository，其名称要与Github账户名相同</h3><h3 id="4-修改博客系统的配置文件blog-config-yml"><a href="#4-修改博客系统的配置文件blog-config-yml" class="headerlink" title="4.修改博客系统的配置文件blog/_config.yml"></a>4.修改博客系统的配置文件blog/_config.yml</h3><p>找到最后的deploy项，将上一步新建的repository的地址复制过来作为repo项，即改成下面这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https:&#x2F;&#x2F;github.com&#x2F;账户名&#x2F;账户名.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-
-<p>注意：冒号与后面的字符之间要留一个空格。</p>
-<p>至此hexo博客基本搭建完成，可以顺利发布博客了。</p>
-<h3 id="5-在blog文件夹下用git-bash执行以下命令发布博客"><a href="#5-在blog文件夹下用git-bash执行以下命令发布博客" class="headerlink" title="5.在blog文件夹下用git bash执行以下命令发布博客"></a>5.在blog文件夹下用git bash执行以下命令发布博客</h3><p>1.新建博客文章</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo n &quot;文章名&quot;</span><br></pre></td></tr></table></figure>
-
-<p>该命令在blog/source/_posts/下生成”文章名.md“文件，可以用编辑器在里面先写好文章</p>
-<p>2.执行清理命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
-
-<p>3.执行生成命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
-
-<p>4.本地预览</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-<p>此后可以在“localhost:4000”访问本地博客。</p>
-<p>5.部署到Github</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>此后可以在“账户名.github.io”访问部署到Github的博客。</p>
-<hr>
-<h2 id="更换主题"><a href="#更换主题" class="headerlink" title="更换主题"></a>更换主题</h2><p>1.从github下载主题包解压到blog/themes/new-theme里；</p>
-<p>2.修改blog/_config.yml文件的theme项，改为新的主题文件夹名new-theme；</p>
-<p>3.此时主题更换完成，在下一次部署时就会生效，主题个性化定制可通过修改主题跟目录下的_config.yml文件实现。</p>
+<p>双击运行mnist_test_run.bat.bat，如果成功运行，说明caffe安装成功。</p>
+<p>ps:如果遇到错误Check failed: status == CUDNN_STATUS_SUCCESS (6 vs. 0)，说明就是本机GPU的加速性能不够，cuDNN只支持CUDA Capability 3.0以上的GPU加速,这时回到Visual Studio 2013,修改CommonSettings.props文件中的<UseCuDNN>true</UseCuDNN>为<UseCuDNN>false</UseCuDNN>，即关闭cuDNN加速，然后重新编译项目libcaffe、Caffe、convert_mnist_data，再次双击运行mnist_test_run.bat.bat。</p>
+</li>
+</ol>
 
     </div>
 
@@ -332,7 +359,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://leifyan.gitee.io/2020/02/25/Hexo-Github%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%B5%81%E7%A8%8B(win)/" title="Hexo+Github博客搭建流程(win)">https://leifyan.gitee.io/2020/02/25/Hexo-Github博客搭建流程(win)/</a>
+    <a href="https://leifyan.gitee.io/2020/10/02/Caffe%E5%AE%89%E8%A3%85-Win10-GPU/" title="Caffe安装(Win10+GPU)">https://leifyan.gitee.io/2020/10/02/Caffe安装-Win10-GPU/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -363,8 +390,9 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/Hexo/" rel="tag"><i class="fa fa-tag"></i> Hexo</a>
-              <a href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="tag"><i class="fa fa-tag"></i> 博客搭建</a>
+              <a href="/tags/Caffe/" rel="tag"><i class="fa fa-tag"></i> Caffe</a>
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 深度学习</a>
+              <a href="/tags/Win10/" rel="tag"><i class="fa fa-tag"></i> Win10</a>
           </div>
 
         
@@ -373,13 +401,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/02/25/hello-world/" rel="prev" title="Hello World">
-      <i class="fa fa-chevron-left"></i> Hello World
+    <a href="/2020/09/01/Win10%E4%B8%8B%E7%94%9F%E6%88%90ssh%E5%85%AC%E9%92%A5/" rel="prev" title="Win10下生成ssh公钥">
+      <i class="fa fa-chevron-left"></i> Win10下生成ssh公钥
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/03/14/Hexo%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96%E2%80%94%E2%80%94%E9%80%9A%E8%BF%87gulp%E5%8E%8B%E7%BC%A9%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6/" rel="next" title="Hexo博客优化——通过gulp压缩静态文件">
-      Hexo博客优化——通过gulp压缩静态文件 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -439,7 +464,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前期准备"><span class="nav-number">1.</span> <span class="nav-text">前期准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-注册Github账号"><span class="nav-number">1.1.</span> <span class="nav-text">1.注册Github账号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-下载nodejs-Git官方安装包"><span class="nav-number">1.2.</span> <span class="nav-text">2.下载nodejs+Git官方安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-保证网络畅通"><span class="nav-number">1.3.</span> <span class="nav-text">3.保证网络畅通</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建与发布"><span class="nav-number">2.</span> <span class="nav-text">搭建与发布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-安装nodejs和Git"><span class="nav-number">2.1.</span> <span class="nav-text">1.安装nodejs和Git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-以管理员的方式运行CMD进行下面的操作"><span class="nav-number">2.2.</span> <span class="nav-text">2.以管理员的方式运行CMD进行下面的操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-在Github账户上新建一个repository，其名称要与Github账户名相同"><span class="nav-number">2.3.</span> <span class="nav-text">3.在Github账户上新建一个repository，其名称要与Github账户名相同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-修改博客系统的配置文件blog-config-yml"><span class="nav-number">2.4.</span> <span class="nav-text">4.修改博客系统的配置文件blog&#x2F;_config.yml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-在blog文件夹下用git-bash执行以下命令发布博客"><span class="nav-number">2.5.</span> <span class="nav-text">5.在blog文件夹下用git bash执行以下命令发布博客</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更换主题"><span class="nav-number">3.</span> <span class="nav-text">更换主题</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、安装CUDA"><span class="nav-number">1.</span> <span class="nav-text">1、安装CUDA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、安装cuDNN"><span class="nav-number">2.</span> <span class="nav-text">2、安装cuDNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、安装Caffe"><span class="nav-number">3.</span> <span class="nav-text">3、安装Caffe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、测试"><span class="nav-number">4.</span> <span class="nav-text">4、测试</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
