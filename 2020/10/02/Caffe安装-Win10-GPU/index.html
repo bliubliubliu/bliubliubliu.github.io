@@ -28,7 +28,7 @@
 <meta property="og:description" content="1、安装CUDA 安装CUDA前需要先安装好Visual Studio 2013；  通过控制面板-&gt;硬件和声音-&gt;NVIDIA控制面板-&gt;帮助-&gt;系统信息-&gt;组件-&gt;3D设置-&gt;NVCUDA.DLL对应的产品名称，查看本机对应的CUDA版本，然后下载对应版本的CUDA；">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-10-02T01:54:26.000Z">
-<meta property="article:modified_time" content="2020-10-02T11:20:18.872Z">
+<meta property="article:modified_time" content="2020-10-03T03:25:28.096Z">
 <meta property="article:author" content="Leif">
 <meta property="article:tag" content="Caffe">
 <meta property="article:tag" content="深度学习">
@@ -209,10 +209,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-10-02 09:54:26 / 修改时间：19:20:18" itemprop="dateCreated datePublished" datetime="2020-10-02T09:54:26+08:00">2020-10-02</time>
+              <time title="创建时间：2020-10-02 09:54:26" itemprop="dateCreated datePublished" datetime="2020-10-02T09:54:26+08:00">2020-10-02</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-03 11:25:28" itemprop="dateModified" datetime="2020-10-03T11:25:28+08:00">2020-10-03</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -229,7 +235,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.4k</span>
+              <span>3.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -265,14 +271,11 @@
 </li>
 </ol>
 <h3 id="2、安装cuDNN"><a href="#2、安装cuDNN" class="headerlink" title="2、安装cuDNN"></a>2、安装cuDNN</h3><ol>
-<li><p>根据CUDA的版本下载对应版本的的cuDNN（需要注册NVIDIA开发者账户）；</p>
-</li>
-<li><p>下载地址：<a href="https://developer.nvidia.com/rdp/cudnn-download" target="_blank" rel="noopener">https://developer.nvidia.com/rdp/cudnn-download</a></p>
-</li>
-<li><p>将下载的压缩包解压，把里面的bin,include,lib文件夹拷贝到CUDA的安装目录；</p>
-</li>
-<li><p>CUDA的安装目录下的<strong>extras\CUPTI\libx64</strong>里面的cupti64_80.dll复制到CUDA的安装目录下<strong>bin</strong>中。</p>
-</li>
+<li>根据CUDA的版本下载对应版本的的cuDNN（需要注册NVIDIA开发者账户）；</li>
+<li>下载地址：<a href="https://developer.nvidia.com/rdp/cudnn-download" target="_blank" rel="noopener">https://developer.nvidia.com/rdp/cudnn-download</a></li>
+<li>下载的cuDNN版本除了需要跟CUDA版本对应，还需要注意后面安装的Caffe是否支持，查看方法：看Caffe的编译配置文件CommonSettings.props中的<CuDnnPath>项上面一行的说明，例如我的就是 <!-- CuDNN 4 and 5 are supported -->，表明支持cuDNN v4和v5；</li>
+<li>将下载的压缩包解压，把里面的bin,include,lib文件夹拷贝到CUDA的安装目录；</li>
+<li>CUDA的安装目录下的<strong>extras\CUPTI\libx64</strong>里面的cupti64_80.dll复制到CUDA的安装目录下<strong>bin</strong>中。</li>
 </ol>
 <h3 id="3、安装Caffe"><a href="#3、安装Caffe" class="headerlink" title="3、安装Caffe"></a>3、安装Caffe</h3><ol>
 <li><p>下载地址：<a href="https://github.com/Microsoft/caffe" target="_blank" rel="noopener">https://github.com/Microsoft/caffe</a></p>
@@ -281,17 +284,20 @@
 </li>
 <li><p>进入caffe-master\windows，复制CommonSettings.props.example文件，并重命名为CommonSettings.props；</p>
 </li>
-<li><p>以管理员身份运行Visual Studio 2013，打开caffe-master\windows中的Caffe.sln，如果libcaffe和testall加载出现问题，就打开CommonSettings.props修改其中<CudaVersion>为本机安装的版本，再重新打开Caffe.sln；</p>
+<li><p>用Visual Studio 2013打开caffe-master\windows中的Caffe.sln，如果libcaffe和testall加载出现问题，就打开CommonSettings.props修改其中<CudaVersion>为本机安装的版本，再重新打开Caffe.sln；</p>
 </li>
 <li><p>设置libcaffe为启动项目;</p>
 </li>
-<li><p>右键项目libcaffe，定位到属性-&gt;-C/C++-&gt;视警告为错误，把这一项改为“否”；</p>
+<li><p>右键项目libcaffe，定位到属性-&gt;-C/C++-&gt;视警告为错误，把这一项改为“否”；或者也可以把CommonSettings.props文件中的TreatWarningAsError项设为false:</p>
+<p><TreatWarningAsError>false</TreatWarningAsError></p>
+</li>
+<li><p>在CommonSettings.props文件的<CuDnnPath>项添加cuDNN路径，即<CuDnnPath>D:\caffe-window</CuDnnPath></p>
 </li>
 <li><p>确保编译方式是release，平台是x64，Ctrl+F5开始编译libcaffe;</p>
 <p>ps1:如遇到错误：nuget 基础连接已经关闭:发送时发生错误，新建txt将下面的代码复制进去，保存为.reg文件，双击文件修改注册表即可解决。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Windows Registry Editor Version 5.00</span><br><span class="line"> </span><br><span class="line">[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\.NETFramework\v4.0.30319]</span><br><span class="line">&quot;SchUseStrongCrypto&quot;&#x3D;dword:00000001</span><br><span class="line"> </span><br><span class="line">[HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\.NETFramework\v4.0.30319]</span><br><span class="line">&quot;SchUseStrongCrypto&quot;&#x3D;dword:00000001</span><br></pre></td></tr></table></figure>
 
-<p>ps2:如果出现了error MSB3721错误,问题可能来自于你的cudnn.cpp，这个文件第144行的cudnnSetConvolution2dDescriptor函数里面缺参数，你在这个函数参数里添加一个CUDNN_DATA_DOUBLE编译就过了；</p>
+<p>ps2:如果出现了error MSB3721错误,问题可能来自于Caffe.sln中的cudnn.cpp，这个文件第144行的cudnnSetConvolution2dDescriptor函数里面缺参数，在这个函数参数里添加一个CUDNN_DATA_DOUBLE编译就过了；</p>
 <p>ps3:error MSB3721错误也可能是因为CommonSettings.props中的这一句：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;CudaArchitecture&gt;compute_35,sm_35;compute_52,sm_52&lt;&#x2F;CudaArchitecture&gt;</span><br></pre></td></tr></table></figure>
 
@@ -321,7 +327,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Build\x64\Release\caffe.exe  train --solver&#x3D;examples\mnist\lenet_solver_adam.prototxt</span><br><span class="line"></span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
 
 <p>双击运行mnist_test_run.bat.bat，如果成功运行，说明caffe安装成功。</p>
-<p>ps:如果遇到错误Check failed: status == CUDNN_STATUS_SUCCESS (6 vs. 0)，说明就是本机GPU的加速性能不够，cuDNN只支持CUDA Capability 3.0以上的GPU加速,这时回到Visual Studio 2013,修改CommonSettings.props文件中的<UseCuDNN>true</UseCuDNN>为<UseCuDNN>false</UseCuDNN>，即关闭cuDNN加速，然后重新编译项目libcaffe、Caffe、convert_mnist_data，再次双击运行mnist_test_run.bat.bat。</p>
+<p>ps:如果遇到错误Check failed: status == CUDNN_STATUS_SUCCESS (6 vs. 0)，说明本机<a href="https://developer.nvidia.com/cuda-gpus" target="_blank" rel="noopener">GPU的加速性能</a>不够，cuDNN只支持CUDA Capability 3.0以上的GPU加速,这时回到Visual Studio 2013,修改CommonSettings.props文件中的<UseCuDNN>true</UseCuDNN>为<UseCuDNN>false</UseCuDNN>，即关闭cuDNN加速，然后重新编译项目libcaffe、Caffe、convert_mnist_data，再次双击运行mnist_test_run.bat.bat。</p>
 </li>
 </ol>
 
