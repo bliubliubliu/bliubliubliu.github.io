@@ -28,7 +28,7 @@
 <meta property="og:description" content="1、安装CUDA 安装CUDA前需要先安装好Visual Studio 2013；  通过控制面板-&gt;硬件和声音-&gt;NVIDIA控制面板-&gt;帮助-&gt;系统信息-&gt;组件-&gt;3D设置-&gt;NVCUDA.DLL对应的产品名称，查看本机对应的CUDA版本，然后下载对应版本的CUDA；">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-10-02T01:54:26.000Z">
-<meta property="article:modified_time" content="2020-10-03T03:25:28.096Z">
+<meta property="article:modified_time" content="2020-10-13T09:53:16.588Z">
 <meta property="article:author" content="Leif">
 <meta property="article:tag" content="Caffe">
 <meta property="article:tag" content="深度学习">
@@ -123,17 +123,17 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">7</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">9</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">4</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">5</span></a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">12</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">13</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -217,7 +217,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-03 11:25:28" itemprop="dateModified" datetime="2020-10-03T11:25:28+08:00">2020-10-03</time>
+                <time title="修改时间：2020-10-13 17:53:16" itemprop="dateModified" datetime="2020-10-13T17:53:16+08:00">2020-10-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -297,7 +297,7 @@
 <p>ps1:如遇到错误：nuget 基础连接已经关闭:发送时发生错误，新建txt将下面的代码复制进去，保存为.reg文件，双击文件修改注册表即可解决。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Windows Registry Editor Version 5.00</span><br><span class="line"> </span><br><span class="line">[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\.NETFramework\v4.0.30319]</span><br><span class="line">&quot;SchUseStrongCrypto&quot;&#x3D;dword:00000001</span><br><span class="line"> </span><br><span class="line">[HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\.NETFramework\v4.0.30319]</span><br><span class="line">&quot;SchUseStrongCrypto&quot;&#x3D;dword:00000001</span><br></pre></td></tr></table></figure>
 
-<p>ps2:如果出现了error MSB3721错误,问题可能来自于Caffe.sln中的cudnn.cpp，这个文件第144行的cudnnSetConvolution2dDescriptor函数里面缺参数，在这个函数参数里添加一个CUDNN_DATA_DOUBLE编译就过了；</p>
+<p>ps2:如果出现了error MSB3721错误,问题可能来自于Caffe.sln中的cudnn.hpp，这个文件第114行的cudnnSetConvolution2dDescriptor函数里面缺参数，在这个函数参数里添加一个CUDNN_DATA_DOUBLE编译就过了；</p>
 <p>ps3:error MSB3721错误也可能是因为CommonSettings.props中的这一句：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;CudaArchitecture&gt;compute_35,sm_35;compute_52,sm_52&lt;&#x2F;CudaArchitecture&gt;</span><br></pre></td></tr></table></figure>
 
@@ -321,7 +321,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Build\x64\Release\convert_mnist_data --backend&#x3D;lmdb data\mnist\train-images-idx3-ubyte\train-images.idx3-ubyte data\mnist\train-labels-idx1-ubyte\train-labels.idx1-ubyte examples\mnist\mnist_train_lmdb</span><br><span class="line"></span><br><span class="line">Build\x64\Release\convert_mnist_data --backend&#x3D;lmdb data\mnist\t10k-images-idx3-ubyte\t10k-images.idx3-ubyte data\mnist\t10k-labels-idx1-ubyte\t10k-labels.idx1-ubyte examples\mnist\mnist_test_lmdb</span><br><span class="line"></span><br><span class="line">Pause</span><br></pre></td></tr></table></figure>
 
 <p>保存bat文件后双击运行，就可以把mnist数据集转换成caffe能够读取的形式；</p>
-<p>ps:注意命令中的路径要跟自己的匹配，如果出现错误Check failed: _mkdir(source.c_str()) == 0 (-1 vs. 0)，可能是因为caffe-master\examples\mnist\下已经存在了mnist_train_lmdb和mnist_test_lmdb文件夹，把它们删除即可解决。</p>
+<p>ps:注意命令中的路径要跟自己的匹配，如果出现错误Check failed: _mkdir(source.c_str()) == 0 (-1 vs. 0)，可能是因为caffe-master\examples\mnist\下已经存在了mnist_train_lmdb和mnist_test_lmdb文件夹，把它们删除再运行即可解决。</p>
 </li>
 <li><p>在caffe-master中新建mnist_test_run.bat.bat文件，内容如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Build\x64\Release\caffe.exe  train --solver&#x3D;examples\mnist\lenet_solver_adam.prototxt</span><br><span class="line"></span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
@@ -410,7 +410,10 @@
     <a href="/2020/09/01/Win10%E4%B8%8B%E7%94%9F%E6%88%90ssh%E5%85%AC%E9%92%A5/" rel="prev" title="Win10下生成ssh公钥">
       <i class="fa fa-chevron-left"></i> Win10下生成ssh公钥
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/16/Win10%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%94%A8Caffe%E8%AE%AD%E7%BB%83CNN%E7%9A%84%E4%B8%80%E8%88%AC%E6%AD%A5%E9%AA%A4/" rel="next" title="Win10环境下用Caffe训练CNN的一般步骤">
+      Win10环境下用Caffe训练CNN的一般步骤 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -486,20 +489,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -533,12 +536,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">94k</span>
+    <span title="站点总字数">99k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:26</span>
+    <span title="站点阅读时长">1:30</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
   </div>

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/htmkl-300x300.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/htmkl-300x300.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/htmkl-300x300.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"leifyan.gitee.io","root":"/","scheme":"Mist","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="首先确保已经用VS2013打开Caffe.sln并编译好了libcaffe、caffe和convert_imageset这三个项目。 一、数据准备1.先准备一个文件夹存放所有训练用的图片文件，再准备一个trainlist.txt文件，包含图片名及其对应的标签，格式如下：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Win10环境下用Caffe训练CNN的一般步骤">
+<meta property="og:url" content="https://leifyan.gitee.io/2020/10/16/Win10%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%94%A8Caffe%E8%AE%AD%E7%BB%83CNN%E7%9A%84%E4%B8%80%E8%88%AC%E6%AD%A5%E9%AA%A4/">
+<meta property="og:site_name" content="Leif的博客">
+<meta property="og:description" content="首先确保已经用VS2013打开Caffe.sln并编译好了libcaffe、caffe和convert_imageset这三个项目。 一、数据准备1.先准备一个文件夹存放所有训练用的图片文件，再准备一个trainlist.txt文件，包含图片名及其对应的标签，格式如下：">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-10-16T09:27:26.000Z">
+<meta property="article:modified_time" content="2020-10-16T09:53:23.325Z">
+<meta property="article:author" content="Leif">
+<meta property="article:tag" content="Caffe">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="Win10">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://leifyan.gitee.io/2020/10/16/Win10%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%94%A8Caffe%E8%AE%AD%E7%BB%83CNN%E7%9A%84%E4%B8%80%E8%88%AC%E6%AD%A5%E9%AA%A4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Win10环境下用Caffe训练CNN的一般步骤 | Leif的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Leif的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">9</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">13</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leifyan.gitee.io/2020/10/16/Win10%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%94%A8Caffe%E8%AE%AD%E7%BB%83CNN%E7%9A%84%E4%B8%80%E8%88%AC%E6%AD%A5%E9%AA%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/sheep.PNG">
+      <meta itemprop="name" content="Leif">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Leif的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Win10环境下用Caffe训练CNN的一般步骤
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-10-16 17:27:26 / 修改时间：17:53:23" itemprop="dateCreated datePublished" datetime="2020-10-16T17:27:26+08:00">2020-10-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">使用教程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>首先确保已经用VS2013打开Caffe.sln并编译好了libcaffe、caffe和convert_imageset这三个项目。</p>
+<h4 id="一、数据准备"><a href="#一、数据准备" class="headerlink" title="一、数据准备"></a>一、数据准备</h4><p>1.先准备一个文件夹存放所有训练用的图片文件，再准备一个trainlist.txt文件，包含图片名及其对应的标签，格式如下：</p>
+<a id="more"></a>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">imagename1.jpg 0</span><br><span class="line">imagename2.jpg 1</span><br><span class="line">imagename3.jpg 1</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>这里提供一个简陋的Python脚本用于划分数据集和生成相应的list.txt文件，不保证样本数目均衡：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">CreateFileList</span><span class="params">(images_path, txt_save_path)</span>:</span></span><br><span class="line">    <span class="comment">#创建list.txt文件</span></span><br><span class="line">    <span class="keyword">with</span> open(txt_save_path,<span class="string">"w"</span>) <span class="keyword">as</span> fw:</span><br><span class="line">        <span class="comment">#查看图片目录下的文件</span></span><br><span class="line">        image_names = os.listdir(images_path)</span><br><span class="line">        <span class="comment">#遍历所有文件名</span></span><br><span class="line">        <span class="keyword">for</span> image_name <span class="keyword">in</span> image_names:</span><br><span class="line">            label=image_name[:image_name.find(<span class="string">'_'</span>)]</span><br><span class="line">            fw.write(image_name + <span class="string">' '</span>+label+<span class="string">'\n'</span>)</span><br><span class="line">        <span class="comment">#打印成功信息</span></span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"生成list.txt文件成功!"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">DivideDatasets</span><span class="params">(root_path)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    通过指定图片集所在路径root_path，按比例（6：2：2）划分训练、验证和测试数据集，以及对应的trainlist.txt文件.</span></span><br><span class="line"><span class="string">    要求:root_path路径下【只有图片】,且图片名以"label_"开头，例如1_猫咪.jpg，0_狗子.jpg</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment">#获得数据集信息并初始化参数</span></span><br><span class="line">    image_names = os.listdir(root_path)</span><br><span class="line">    all_num=len(image_names)</span><br><span class="line">    train_num=int(<span class="number">3</span>*all_num/<span class="number">5</span>) <span class="comment">#6/10</span></span><br><span class="line">    verify_num=int(all_num/<span class="number">5</span>) <span class="comment">#2/10</span></span><br><span class="line">    end_of_verify=train_num+verify_num</span><br><span class="line">    num=<span class="number">1</span></span><br><span class="line">    <span class="comment"># 随机打乱文件名顺序</span></span><br><span class="line">    random.shuffle(image_names)</span><br><span class="line">    <span class="comment">#创建所需目录</span></span><br><span class="line">    train_path=root_path+<span class="string">'train\\'</span></span><br><span class="line">    verify_path=root_path+<span class="string">'verify\\'</span></span><br><span class="line">    test_path=root_path+<span class="string">'test\\'</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(train_path):</span><br><span class="line">        os.makedirs(train_path)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(verify_path):</span><br><span class="line">        os.makedirs(verify_path)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(test_path):</span><br><span class="line">        os.makedirs(test_path)</span><br><span class="line">    <span class="comment"># 移动文件到目标文件夹</span></span><br><span class="line">    <span class="keyword">for</span> image_name <span class="keyword">in</span> image_names:</span><br><span class="line">        <span class="keyword">if</span> num&lt;=train_num:</span><br><span class="line">            shutil.move(root_path+image_name,train_path+image_name)</span><br><span class="line">        <span class="keyword">elif</span> num&lt;=end_of_verify:</span><br><span class="line">            shutil.move(root_path+image_name,verify_path+image_name)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            shutil.move(root_path+image_name,test_path+image_name)</span><br><span class="line">        num+=<span class="number">1</span></span><br><span class="line">    <span class="comment"># 生成各数据集的list.txt文件</span></span><br><span class="line">    CreateFileList(train_path,root_path+<span class="string">'trainlist.txt'</span>)</span><br><span class="line">    CreateFileList(verify_path,root_path+<span class="string">'verifylist.txt'</span>)</span><br><span class="line">    CreateFileList(test_path,root_path+<span class="string">'testlist.txt'</span>)</span><br><span class="line">    print(<span class="string">"数据划分成功！"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#定义图片集根目录</span></span><br><span class="line">root_path=<span class="string">'D:\\caffe-window\\caffe-master\\my_caffe_project\\data\\imageset\\'</span></span><br><span class="line"><span class="comment">#调用划分函数</span></span><br><span class="line">DivideDatasets(root_path)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>2.然后调用编译好的convert_imageset.exe将图片数据集转换为适合Caffe快速读取的lmdb格式，具体做法是在caffe-master文件夹里新建批处理文件my_data_convert.bat，以灰度图为例，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Build\x64\Release\convert_imageset     --gray&#x3D;true    --shuffle    --backend&#x3D;lmdb    my_caffe_project\data\imageset\train\    my_caffe_project\data\imageset\trainlist.txt   my_caffe_project\data\LMDB\trainset</span><br><span class="line"></span><br><span class="line">Build\x64\Release\convert_imageset     --gray&#x3D;true    --shuffle    --backend&#x3D;lmdb    my_caffe_project\data\imageset\verify\    my_caffe_project\data\imageset\verifylist.txt   my_caffe_project\data\LMDB\verifyset</span><br><span class="line"></span><br><span class="line">Build\x64\Release\convert_imageset     --gray&#x3D;true    --shuffle    --backend&#x3D;lmdb    my_caffe_project\data\imageset\test\    my_caffe_project\data\imageset\testlist.txt   my_caffe_project\data\LMDB\testset</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Pause</span><br><span class="line">#注意上述Build和my_caffe_project都是caffe-master的子目录。</span><br></pre></td></tr></table></figure>
+
+<h4 id="二、修改定义好网络配置文件train-test-prototxt和训练参数配置文件solver-prototxt"><a href="#二、修改定义好网络配置文件train-test-prototxt和训练参数配置文件solver-prototxt" class="headerlink" title="二、修改定义好网络配置文件train_test.prototxt和训练参数配置文件solver.prototxt"></a>二、修改定义好网络配置文件train_test.prototxt和训练参数配置文件solver.prototxt</h4><p>假设两个配置文件都在目录caffe-master\my_caffe_project\mynet\下，网络结构和训练参数都设置好之后，只需修改train_test.prototxt中数据层的训练集和测试集lmdb文件所在路径，修改为我们在上一步生成的lmdb文件所在路径：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">  ...</span><br><span class="line">  data_param &#123;</span><br><span class="line">    source: &quot;my_caffe_project&#x2F;data&#x2F;LMDB&#x2F;imageset_train_lmdb&quot;</span><br><span class="line">    batch_size: 64</span><br><span class="line">    backend: LMDB</span><br><span class="line">  ...</span><br><span class="line">  data_param &#123;</span><br><span class="line">    source: &quot;my_caffe_project&#x2F;data&#x2F;LMDB&#x2F;imageset_test_lmdb&quot;</span><br><span class="line">    batch_size: 100</span><br><span class="line">    backend: LMDB</span><br><span class="line">#注意：路径中要用&#39;&#x2F;&#39;分隔。</span><br></pre></td></tr></table></figure>
+
+<p>然后修改solver.prototxt中的net参数和snapshot_prefix参数，指定网络配置文件的路径和网络快照保存位置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">net: &quot;my_caffe_project&#x2F;mynet&#x2F;train_test.prototxt&quot;</span><br><span class="line">...</span><br><span class="line">snapshot_prefix: &quot;my_caffe_project&#x2F;mynet&#x2F;mynet&quot;</span><br><span class="line">#最后一个&#39;mynet&#39;表示网络快照文件的前缀</span><br><span class="line">#注意：路径中要用&#39;&#x2F;&#39;分隔。</span><br></pre></td></tr></table></figure>
+
+<h4 id="三、调用caffe-exe训练网络"><a href="#三、调用caffe-exe训练网络" class="headerlink" title="三、调用caffe.exe训练网络"></a>三、调用caffe.exe训练网络</h4><p>在caffe-master文件夹下新建批处理文件mynet_train_run.bat文件，编辑如下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Build\x64\Release\caffe.exe  train --solver&#x3D;my_caffe_project\mynet\solver.prototxt  --gpu&#x3D;0</span><br><span class="line"></span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Leif 支付宝">
+        <p>支付宝</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Leif 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Leif
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://leifyan.gitee.io/2020/10/16/Win10%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%94%A8Caffe%E8%AE%AD%E7%BB%83CNN%E7%9A%84%E4%B8%80%E8%88%AC%E6%AD%A5%E9%AA%A4/" title="Win10环境下用Caffe训练CNN的一般步骤">https://leifyan.gitee.io/2020/10/16/Win10环境下用Caffe训练CNN的一般步骤/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+            <div class="social-item">
+              <a target="_blank" class="social-link" href="/images/微信.jpg">
+                <span class="icon">
+                  <i class="fa fa-wechat"></i>
+                </span>
+
+                <span class="label">WeChat</span>
+              </a>
+            </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Caffe/" rel="tag"><i class="fa fa-tag"></i> Caffe</a>
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 深度学习</a>
+              <a href="/tags/Win10/" rel="tag"><i class="fa fa-tag"></i> Win10</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/02/Caffe%E5%AE%89%E8%A3%85-Win10-GPU/" rel="prev" title="Caffe安装(Win10+GPU)">
+      <i class="fa fa-chevron-left"></i> Caffe安装(Win10+GPU)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/16/Win10%E7%8E%AF%E5%A2%83%E4%B8%8B%E4%BB%A5%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%96%B9%E5%BC%8F%E8%B0%83%E7%94%A8Caffe/" rel="next" title="Win10环境下以命令行方式调用Caffe">
+      Win10环境下以命令行方式调用Caffe <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、数据准备"><span class="nav-number">1.</span> <span class="nav-text">一、数据准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、修改定义好网络配置文件train-test-prototxt和训练参数配置文件solver-prototxt"><span class="nav-number">2.</span> <span class="nav-text">二、修改定义好网络配置文件train_test.prototxt和训练参数配置文件solver.prototxt</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、调用caffe-exe训练网络"><span class="nav-number">3.</span> <span class="nav-text">三、调用caffe.exe训练网络</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Leif"
+      src="/images/sheep.PNG">
+  <p class="site-author-name" itemprop="name">Leif</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Leif</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">99k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:30</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.7.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"scale":0.95,"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":200,"height":400,"vOffset":10},"mobile":{"show":true}});</script></body>
+</html>

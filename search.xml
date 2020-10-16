@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Win10环境下以命令行方式调用Caffe</title>
+    <url>/2020/10/16/Win10%E7%8E%AF%E5%A2%83%E4%B8%8B%E4%BB%A5%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%96%B9%E5%BC%8F%E8%B0%83%E7%94%A8Caffe/</url>
+    <content><![CDATA[<p>调用Caffe的命令行格式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">caffe  &lt;command&gt;  &lt;arg&gt;</span><br><span class="line"></span><br><span class="line">#以下为注释内容，介绍命令和参数的可选项</span><br><span class="line">#command:</span><br><span class="line">	train</span><br><span class="line">	test</span><br><span class="line">	time</span><br><span class="line">	device_query</span><br><span class="line">#args:</span><br><span class="line">	-solver	#指定训练配置文件solver.prototxt</span><br><span class="line">	-model	#指定模型配置文件train_test.prototxt</span><br><span class="line">	-weights	#指定模型权重，即一个.caffemodel文件</span><br><span class="line">	-iterations	#指定迭代次数，一般用于test和time命令</span><br><span class="line">	-gpu	#指定运行模型的gpu id</span><br><span class="line">	-snapshot	#指定用于恢复训练的快照,即一个.solverstate文件</span><br><span class="line">	-sighup_effect	#指定程序被挂起时采取的操作，默认为snapshot，还可以设为stop或none</span><br><span class="line">	-sigint_effct	#指定程序被键盘终止(ctrl+c)时采取的操作，默认为snapshot，还可以设为stop或none</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<p>下面是用批处理文件(.bat)运行上述命令的示例。</p>
+<h4 id="1-train命令示例"><a href="#1-train命令示例" class="headerlink" title="1. train命令示例"></a>1. train命令示例</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Build\x64\Release\caffe.exe  train --solver&#x3D;my_caffe_project\mynet\solver.prototxt  </span><br><span class="line"></span><br><span class="line">pause </span><br><span class="line">#这里没有使用其他参数，因为一般都在solver.prototxt文件中设置好了</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-test命令示例"><a href="#2-test命令示例" class="headerlink" title="2. test命令示例"></a>2. test命令示例</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Build\x64\Release\caffe.exe  test  --model  my_caffe_project\mynet\train_test.prototxt  --weights  my_caffe_project\mynet\mynet_iter_5000.caffemodel  --gpu 0  --iterations 100</span><br><span class="line"></span><br><span class="line">pause </span><br><span class="line">#本次测试指定了：模型+权重+迭代次数+运行设备</span><br><span class="line">#模型、权重是必选项，迭代次数默认为50，运行设备默认是CPU</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-time命令示例"><a href="#3-time命令示例" class="headerlink" title="3. time命令示例"></a>3. time命令示例</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Build\x64\Release\caffe.exe  time  --model  my_caffe_project\mynet\train_test.prototxt  --weights  my_caffe_project\mynet\mynet_iter_5000.caffemodel  --iterations 10  --gpu&#x3D;0</span><br><span class="line"></span><br><span class="line">pause </span><br><span class="line">#本次时间测量指定了：模型+权重+迭代次数+运行设备</span><br><span class="line">#仅模型是必选项</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-device-query命令示例"><a href="#4-device-query命令示例" class="headerlink" title="4. device_query命令示例"></a>4. device_query命令示例</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Build\x64\Release\caffe.exe  device_query    --gpu 0</span><br><span class="line"></span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
+
+<h4 id="PS："><a href="#PS：" class="headerlink" title="PS："></a>PS：</h4><p>在批处理文件中用命令行调用Caffe时，程序、命令、参数之间可以用任意数量的空格隔开，参数名需要前缀1或2个”-“，参数名与参数值之间可以用任意数量的空格隔开，也可以用”=”连接。</p>
+]]></content>
+      <categories>
+        <category>使用教程</category>
+      </categories>
+      <tags>
+        <tag>Caffe</tag>
+        <tag>深度学习</tag>
+        <tag>Win10</tag>
+        <tag>命令行</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Win10环境下用Caffe训练CNN的一般步骤</title>
+    <url>/2020/10/16/Win10%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%94%A8Caffe%E8%AE%AD%E7%BB%83CNN%E7%9A%84%E4%B8%80%E8%88%AC%E6%AD%A5%E9%AA%A4/</url>
+    <content><![CDATA[<p>首先确保已经用VS2013打开Caffe.sln并编译好了libcaffe、caffe和convert_imageset这三个项目。</p>
+<h4 id="一、数据准备"><a href="#一、数据准备" class="headerlink" title="一、数据准备"></a>一、数据准备</h4><p>1.先准备一个文件夹存放所有训练用的图片文件，再准备一个trainlist.txt文件，包含图片名及其对应的标签，格式如下：</p>
+<a id="more"></a>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">imagename1.jpg 0</span><br><span class="line">imagename2.jpg 1</span><br><span class="line">imagename3.jpg 1</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>这里提供一个简陋的Python脚本用于划分数据集和生成相应的list.txt文件，不保证样本数目均衡：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">CreateFileList</span><span class="params">(images_path, txt_save_path)</span>:</span></span><br><span class="line">    <span class="comment">#创建list.txt文件</span></span><br><span class="line">    <span class="keyword">with</span> open(txt_save_path,<span class="string">"w"</span>) <span class="keyword">as</span> fw:</span><br><span class="line">        <span class="comment">#查看图片目录下的文件</span></span><br><span class="line">        image_names = os.listdir(images_path)</span><br><span class="line">        <span class="comment">#遍历所有文件名</span></span><br><span class="line">        <span class="keyword">for</span> image_name <span class="keyword">in</span> image_names:</span><br><span class="line">            label=image_name[:image_name.find(<span class="string">'_'</span>)]</span><br><span class="line">            fw.write(image_name + <span class="string">' '</span>+label+<span class="string">'\n'</span>)</span><br><span class="line">        <span class="comment">#打印成功信息</span></span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"生成list.txt文件成功!"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">DivideDatasets</span><span class="params">(root_path)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    通过指定图片集所在路径root_path，按比例（6：2：2）划分训练、验证和测试数据集，以及对应的trainlist.txt文件.</span></span><br><span class="line"><span class="string">    要求:root_path路径下【只有图片】,且图片名以"label_"开头，例如1_猫咪.jpg，0_狗子.jpg</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment">#获得数据集信息并初始化参数</span></span><br><span class="line">    image_names = os.listdir(root_path)</span><br><span class="line">    all_num=len(image_names)</span><br><span class="line">    train_num=int(<span class="number">3</span>*all_num/<span class="number">5</span>) <span class="comment">#6/10</span></span><br><span class="line">    verify_num=int(all_num/<span class="number">5</span>) <span class="comment">#2/10</span></span><br><span class="line">    end_of_verify=train_num+verify_num</span><br><span class="line">    num=<span class="number">1</span></span><br><span class="line">    <span class="comment"># 随机打乱文件名顺序</span></span><br><span class="line">    random.shuffle(image_names)</span><br><span class="line">    <span class="comment">#创建所需目录</span></span><br><span class="line">    train_path=root_path+<span class="string">'train\\'</span></span><br><span class="line">    verify_path=root_path+<span class="string">'verify\\'</span></span><br><span class="line">    test_path=root_path+<span class="string">'test\\'</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(train_path):</span><br><span class="line">        os.makedirs(train_path)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(verify_path):</span><br><span class="line">        os.makedirs(verify_path)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(test_path):</span><br><span class="line">        os.makedirs(test_path)</span><br><span class="line">    <span class="comment"># 移动文件到目标文件夹</span></span><br><span class="line">    <span class="keyword">for</span> image_name <span class="keyword">in</span> image_names:</span><br><span class="line">        <span class="keyword">if</span> num&lt;=train_num:</span><br><span class="line">            shutil.move(root_path+image_name,train_path+image_name)</span><br><span class="line">        <span class="keyword">elif</span> num&lt;=end_of_verify:</span><br><span class="line">            shutil.move(root_path+image_name,verify_path+image_name)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            shutil.move(root_path+image_name,test_path+image_name)</span><br><span class="line">        num+=<span class="number">1</span></span><br><span class="line">    <span class="comment"># 生成各数据集的list.txt文件</span></span><br><span class="line">    CreateFileList(train_path,root_path+<span class="string">'trainlist.txt'</span>)</span><br><span class="line">    CreateFileList(verify_path,root_path+<span class="string">'verifylist.txt'</span>)</span><br><span class="line">    CreateFileList(test_path,root_path+<span class="string">'testlist.txt'</span>)</span><br><span class="line">    print(<span class="string">"数据划分成功！"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#定义图片集根目录</span></span><br><span class="line">root_path=<span class="string">'D:\\caffe-window\\caffe-master\\my_caffe_project\\data\\imageset\\'</span></span><br><span class="line"><span class="comment">#调用划分函数</span></span><br><span class="line">DivideDatasets(root_path)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>2.然后调用编译好的convert_imageset.exe将图片数据集转换为适合Caffe快速读取的lmdb格式，具体做法是在caffe-master文件夹里新建批处理文件my_data_convert.bat，以灰度图为例，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Build\x64\Release\convert_imageset     --gray&#x3D;true    --shuffle    --backend&#x3D;lmdb    my_caffe_project\data\imageset\train\    my_caffe_project\data\imageset\trainlist.txt   my_caffe_project\data\LMDB\trainset</span><br><span class="line"></span><br><span class="line">Build\x64\Release\convert_imageset     --gray&#x3D;true    --shuffle    --backend&#x3D;lmdb    my_caffe_project\data\imageset\verify\    my_caffe_project\data\imageset\verifylist.txt   my_caffe_project\data\LMDB\verifyset</span><br><span class="line"></span><br><span class="line">Build\x64\Release\convert_imageset     --gray&#x3D;true    --shuffle    --backend&#x3D;lmdb    my_caffe_project\data\imageset\test\    my_caffe_project\data\imageset\testlist.txt   my_caffe_project\data\LMDB\testset</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Pause</span><br><span class="line">#注意上述Build和my_caffe_project都是caffe-master的子目录。</span><br></pre></td></tr></table></figure>
+
+<h4 id="二、修改定义好网络配置文件train-test-prototxt和训练参数配置文件solver-prototxt"><a href="#二、修改定义好网络配置文件train-test-prototxt和训练参数配置文件solver-prototxt" class="headerlink" title="二、修改定义好网络配置文件train_test.prototxt和训练参数配置文件solver.prototxt"></a>二、修改定义好网络配置文件train_test.prototxt和训练参数配置文件solver.prototxt</h4><p>假设两个配置文件都在目录caffe-master\my_caffe_project\mynet\下，网络结构和训练参数都设置好之后，只需修改train_test.prototxt中数据层的训练集和测试集lmdb文件所在路径，修改为我们在上一步生成的lmdb文件所在路径：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">  ...</span><br><span class="line">  data_param &#123;</span><br><span class="line">    source: &quot;my_caffe_project&#x2F;data&#x2F;LMDB&#x2F;imageset_train_lmdb&quot;</span><br><span class="line">    batch_size: 64</span><br><span class="line">    backend: LMDB</span><br><span class="line">  ...</span><br><span class="line">  data_param &#123;</span><br><span class="line">    source: &quot;my_caffe_project&#x2F;data&#x2F;LMDB&#x2F;imageset_test_lmdb&quot;</span><br><span class="line">    batch_size: 100</span><br><span class="line">    backend: LMDB</span><br><span class="line">#注意：路径中要用&#39;&#x2F;&#39;分隔。</span><br></pre></td></tr></table></figure>
+
+<p>然后修改solver.prototxt中的net参数和snapshot_prefix参数，指定网络配置文件的路径和网络快照保存位置：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">net: &quot;my_caffe_project&#x2F;mynet&#x2F;train_test.prototxt&quot;</span><br><span class="line">...</span><br><span class="line">snapshot_prefix: &quot;my_caffe_project&#x2F;mynet&#x2F;mynet&quot;</span><br><span class="line">#最后一个&#39;mynet&#39;表示网络快照文件的前缀</span><br><span class="line">#注意：路径中要用&#39;&#x2F;&#39;分隔。</span><br></pre></td></tr></table></figure>
+
+<h4 id="三、调用caffe-exe训练网络"><a href="#三、调用caffe-exe训练网络" class="headerlink" title="三、调用caffe.exe训练网络"></a>三、调用caffe.exe训练网络</h4><p>在caffe-master文件夹下新建批处理文件mynet_train_run.bat文件，编辑如下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Build\x64\Release\caffe.exe  train --solver&#x3D;my_caffe_project\mynet\solver.prototxt  --gpu&#x3D;0</span><br><span class="line"></span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>使用教程</category>
+      </categories>
+      <tags>
+        <tag>Caffe</tag>
+        <tag>深度学习</tag>
+        <tag>Win10</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Caffe安装(Win10+GPU)</title>
     <url>/2020/10/02/Caffe%E5%AE%89%E8%A3%85-Win10-GPU/</url>
     <content><![CDATA[<h3 id="1、安装CUDA"><a href="#1、安装CUDA" class="headerlink" title="1、安装CUDA"></a>1、安装CUDA</h3><ol>
@@ -46,7 +110,7 @@
 <p>ps1:如遇到错误：nuget 基础连接已经关闭:发送时发生错误，新建txt将下面的代码复制进去，保存为.reg文件，双击文件修改注册表即可解决。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Windows Registry Editor Version 5.00</span><br><span class="line"> </span><br><span class="line">[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\.NETFramework\v4.0.30319]</span><br><span class="line">&quot;SchUseStrongCrypto&quot;&#x3D;dword:00000001</span><br><span class="line"> </span><br><span class="line">[HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\.NETFramework\v4.0.30319]</span><br><span class="line">&quot;SchUseStrongCrypto&quot;&#x3D;dword:00000001</span><br></pre></td></tr></table></figure>
 
-<p>ps2:如果出现了error MSB3721错误,问题可能来自于Caffe.sln中的cudnn.cpp，这个文件第144行的cudnnSetConvolution2dDescriptor函数里面缺参数，在这个函数参数里添加一个CUDNN_DATA_DOUBLE编译就过了；</p>
+<p>ps2:如果出现了error MSB3721错误,问题可能来自于Caffe.sln中的cudnn.hpp，这个文件第114行的cudnnSetConvolution2dDescriptor函数里面缺参数，在这个函数参数里添加一个CUDNN_DATA_DOUBLE编译就过了；</p>
 <p>ps3:error MSB3721错误也可能是因为CommonSettings.props中的这一句：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;CudaArchitecture&gt;compute_35,sm_35;compute_52,sm_52&lt;&#x2F;CudaArchitecture&gt;</span><br></pre></td></tr></table></figure>
 
@@ -70,7 +134,7 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Build\x64\Release\convert_mnist_data --backend&#x3D;lmdb data\mnist\train-images-idx3-ubyte\train-images.idx3-ubyte data\mnist\train-labels-idx1-ubyte\train-labels.idx1-ubyte examples\mnist\mnist_train_lmdb</span><br><span class="line"></span><br><span class="line">Build\x64\Release\convert_mnist_data --backend&#x3D;lmdb data\mnist\t10k-images-idx3-ubyte\t10k-images.idx3-ubyte data\mnist\t10k-labels-idx1-ubyte\t10k-labels.idx1-ubyte examples\mnist\mnist_test_lmdb</span><br><span class="line"></span><br><span class="line">Pause</span><br></pre></td></tr></table></figure>
 
 <p>保存bat文件后双击运行，就可以把mnist数据集转换成caffe能够读取的形式；</p>
-<p>ps:注意命令中的路径要跟自己的匹配，如果出现错误Check failed: _mkdir(source.c_str()) == 0 (-1 vs. 0)，可能是因为caffe-master\examples\mnist\下已经存在了mnist_train_lmdb和mnist_test_lmdb文件夹，把它们删除即可解决。</p>
+<p>ps:注意命令中的路径要跟自己的匹配，如果出现错误Check failed: _mkdir(source.c_str()) == 0 (-1 vs. 0)，可能是因为caffe-master\examples\mnist\下已经存在了mnist_train_lmdb和mnist_test_lmdb文件夹，把它们删除再运行即可解决。</p>
 </li>
 <li><p>在caffe-master中新建mnist_test_run.bat.bat文件，内容如下：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Build\x64\Release\caffe.exe  train --solver&#x3D;examples\mnist\lenet_solver_adam.prototxt</span><br><span class="line"></span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
