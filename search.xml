@@ -1,6 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Win10环境下用draw-net.py绘制Caffe模型的网络结构图</title>
+    <url>/2020/10/26/Win10%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%94%A8draw-net.py%E7%BB%98%E5%88%B6Caffe%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E5%9B%BE/</url>
+    <content><![CDATA[<h4 id="1-编译pycaffe项目"><a href="#1-编译pycaffe项目" class="headerlink" title="1.编译pycaffe项目"></a>1.编译pycaffe项目</h4><p>Caffe提供了Python接口，用Visual Studio 2013打开caffe-master\window目录下的Caffe.sln，修改文件CommonSettings.props的<PythonSupport>项为true，并在<PythonDir>项添加本机的Python安装路径，推荐用Python2，Python3编译时会报错，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;PythonSupport&gt;true&lt;&#x2F;PythonSupport&gt;</span><br><span class="line">...</span><br><span class="line">&lt;PythonDir&gt;C:\python27&lt;&#x2F;PythonDir&gt;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>然后生成pycaffe项目。</p>
+<a id="more"></a>
+
+<h4 id="2-为Python添加Caffe模块"><a href="#2-为Python添加Caffe模块" class="headerlink" title="2.为Python添加Caffe模块"></a>2.为Python添加Caffe模块</h4><p>上一步成功编译pycaffe后，在caffe-master\Build\x64\Release目录下可以找到pycaffe文件夹，把里面的caffe文件夹拷贝到Python安装目录下的Lib\site-packages中，然后用CMD打开Python并尝试导入caffe模块：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> caffe</span><br><span class="line"></span><br><span class="line"><span class="comment">#如果正常导入，说明添加成功，否则需要根据错误提示安装所需依赖包。</span></span><br><span class="line"><span class="comment">#所需依赖至少包括numpy、scikit-image、scipy、protobuf</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-安装绘图脚本所需依赖"><a href="#3-安装绘图脚本所需依赖" class="headerlink" title="3.安装绘图脚本所需依赖"></a>3.安装绘图脚本所需依赖</h4><p><strong>1.安装pydot包</strong></p>
+<p><strong>2.安装Graphviz软件:</strong></p>
+<ol>
+<li><p>在<a href="https://www2.graphviz.org/Packages/stable/windows/10/cmake/Release/x64/" target="_blank" rel="noopener">Graphviz官网</a>下载安装包；</p>
+</li>
+<li><p>安装Graphviz并将安装目录下的\bin添加到系统环境变量Path；</p>
+</li>
+<li><p><strong>以管理员方式打开</strong>CMD运行以下命令完成配置:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">dot -c</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="4-用CMD调用Python执行绘图脚本draw-net-py"><a href="#4-用CMD调用Python执行绘图脚本draw-net-py" class="headerlink" title="4.用CMD调用Python执行绘图脚本draw_net.py"></a>4.用CMD调用Python执行绘图脚本draw_net.py</h4><p>draw_net.py位于caffe-master\python目录，可以把自己的网络模型配置文件train_test.prototxt拷贝到该目录，并<strong>在该目录运行</strong>CMD，然后执行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python draw_net.py --rankdir LR train_test.prototxt 网络结构图.jpg</span><br><span class="line"></span><br><span class="line">#参数--rankdir LR 用来设置网络结构图的摆放方向，可选项有：</span><br><span class="line">#自左向右：LR</span><br><span class="line">#自右向左：RL</span><br><span class="line">#自下而上：BT</span><br><span class="line">#自上而下：TB</span><br></pre></td></tr></table></figure>
+
+<p>就会在caffe-master\python目录下生成“网络结构图.jpg”。</p>
+]]></content>
+      <categories>
+        <category>使用教程</category>
+      </categories>
+      <tags>
+        <tag>Caffe</tag>
+        <tag>深度学习</tag>
+        <tag>Win10</tag>
+        <tag>Python</tag>
+        <tag>可视化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2020/10/24/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<a id="more"></a>
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>Win10下用“命令行+Matla”实现Caffe训练过程可视化</title>
     <url>/2020/10/23/Win10%E4%B8%8B%E7%94%A8%E2%80%9C%E5%91%BD%E4%BB%A4%E8%A1%8C+Matla%E2%80%9D%E5%AE%9E%E7%8E%B0Caffe%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B%E5%8F%AF%E8%A7%86%E5%8C%96/</url>
     <content><![CDATA[<h4 id="1-训练模型并获取训练日志"><a href="#1-训练模型并获取训练日志" class="headerlink" title="1.训练模型并获取训练日志"></a>1.训练模型并获取训练日志</h4><p>用CMD调用Caffe进行模型训练并将日志重定向到txt文件，命令格式如下:</p>
@@ -1223,25 +1283,5 @@ y: [1×1 sym]   ??？【这里应该有两组解的】</code></pre><blockquote>
         <tag>Hexo</tag>
         <tag>博客搭建</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2020/02/25/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<a id="more"></a>
-
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
   </entry>
 </search>

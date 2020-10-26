@@ -20,21 +20,24 @@
     var CONFIG = {"hostname":"leifyan.gitee.io","root":"/","scheme":"Mist","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="前期准备1.注册Github账号2.下载nodejs+Git官方安装包3.保证网络畅通">
+  <meta name="description" content="1.编译pycaffe项目Caffe提供了Python接口，用Visual Studio 2013打开caffe-master\window目录下的Caffe.sln，修改文件CommonSettings.props的项为true，并在项添加本机的Python安装路径，推荐用Python2，Python3编译时会报错，例如： 12345...&lt;PythonSupport&gt;true&amp;lt">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo+Github博客搭建流程(win)">
-<meta property="og:url" content="https://leifyan.gitee.io/2020/02/25/Hexo-Github%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%B5%81%E7%A8%8B(win)/">
+<meta property="og:title" content="Win10环境下用draw-net.py绘制Caffe模型的网络结构图">
+<meta property="og:url" content="https://leifyan.gitee.io/2020/10/26/Win10%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%94%A8draw-net.py%E7%BB%98%E5%88%B6Caffe%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E5%9B%BE/">
 <meta property="og:site_name" content="Leif的博客">
-<meta property="og:description" content="前期准备1.注册Github账号2.下载nodejs+Git官方安装包3.保证网络畅通">
+<meta property="og:description" content="1.编译pycaffe项目Caffe提供了Python接口，用Visual Studio 2013打开caffe-master\window目录下的Caffe.sln，修改文件CommonSettings.props的项为true，并在项添加本机的Python安装路径，推荐用Python2，Python3编译时会报错，例如： 12345...&lt;PythonSupport&gt;true&amp;lt">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-02-25T10:15:46.000Z">
-<meta property="article:modified_time" content="2020-08-29T14:19:32.133Z">
+<meta property="article:published_time" content="2020-10-26T03:27:58.000Z">
+<meta property="article:modified_time" content="2020-10-26T03:33:21.945Z">
 <meta property="article:author" content="Leif">
-<meta property="article:tag" content="Hexo">
-<meta property="article:tag" content="博客搭建">
+<meta property="article:tag" content="Caffe">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="Win10">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="可视化">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://leifyan.gitee.io/2020/02/25/Hexo-Github%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%B5%81%E7%A8%8B(win)/">
+<link rel="canonical" href="https://leifyan.gitee.io/2020/10/26/Win10%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%94%A8draw-net.py%E7%BB%98%E5%88%B6Caffe%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E5%9B%BE/">
 
 
 <script id="page-configurations">
@@ -46,7 +49,7 @@
   };
 </script>
 
-  <title>Hexo+Github博客搭建流程(win) | Leif的博客</title>
+  <title>Win10环境下用draw-net.py绘制Caffe模型的网络结构图 | Leif的博客</title>
   
 
 
@@ -186,7 +189,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://leifyan.gitee.io/2020/02/25/Hexo-Github%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%B5%81%E7%A8%8B(win)/">
+    <link itemprop="mainEntityOfPage" href="https://leifyan.gitee.io/2020/10/26/Win10%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%94%A8draw-net.py%E7%BB%98%E5%88%B6Caffe%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E5%9B%BE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/sheep.PNG">
@@ -199,7 +202,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hexo+Github博客搭建流程(win)
+          Win10环境下用draw-net.py绘制Caffe模型的网络结构图
         </h1>
 
         <div class="post-meta">
@@ -208,23 +211,17 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-02-25 18:15:46" itemprop="dateCreated datePublished" datetime="2020-02-25T18:15:46+08:00">2020-02-25</time>
+              <time title="创建时间：2020-10-26 11:27:58 / 修改时间：11:33:21" itemprop="dateCreated datePublished" datetime="2020-10-26T11:27:58+08:00">2020-10-26</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-29 22:19:32" itemprop="dateModified" datetime="2020-08-29T22:19:32+08:00">2020-08-29</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a>
+                  <a href="/categories/%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">使用教程</span></a>
                 </span>
             </span>
 
@@ -234,7 +231,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
+              <span>950</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -253,50 +250,31 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><h3 id="1-注册Github账号"><a href="#1-注册Github账号" class="headerlink" title="1.注册Github账号"></a>1.注册Github账号</h3><h3 id="2-下载nodejs-Git官方安装包"><a href="#2-下载nodejs-Git官方安装包" class="headerlink" title="2.下载nodejs+Git官方安装包"></a>2.下载nodejs+Git官方安装包</h3><h3 id="3-保证网络畅通"><a href="#3-保证网络畅通" class="headerlink" title="3.保证网络畅通"></a>3.保证网络畅通</h3><a id="more"></a>
+        <h4 id="1-编译pycaffe项目"><a href="#1-编译pycaffe项目" class="headerlink" title="1.编译pycaffe项目"></a>1.编译pycaffe项目</h4><p>Caffe提供了Python接口，用Visual Studio 2013打开caffe-master\window目录下的Caffe.sln，修改文件CommonSettings.props的<PythonSupport>项为true，并在<PythonDir>项添加本机的Python安装路径，推荐用Python2，Python3编译时会报错，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;PythonSupport&gt;true&lt;&#x2F;PythonSupport&gt;</span><br><span class="line">...</span><br><span class="line">&lt;PythonDir&gt;C:\python27&lt;&#x2F;PythonDir&gt;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
-<hr>
-<h2 id="搭建与发布"><a href="#搭建与发布" class="headerlink" title="搭建与发布"></a>搭建与发布</h2><h3 id="1-安装nodejs和Git"><a href="#1-安装nodejs和Git" class="headerlink" title="1.安装nodejs和Git"></a>1.安装nodejs和Git</h3><h3 id="2-以管理员的方式运行CMD进行下面的操作"><a href="#2-以管理员的方式运行CMD进行下面的操作" class="headerlink" title="2.以管理员的方式运行CMD进行下面的操作"></a>2.以管理员的方式运行CMD进行下面的操作</h3><p>1.首先给npm换源</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry https:&#x2F;&#x2F;registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+<p>然后生成pycaffe项目。</p>
+<a id="more"></a>
 
-<p>2.安装hexo-cli</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<h4 id="2-为Python添加Caffe模块"><a href="#2-为Python添加Caffe模块" class="headerlink" title="2.为Python添加Caffe模块"></a>2.为Python添加Caffe模块</h4><p>上一步成功编译pycaffe后，在caffe-master\Build\x64\Release目录下可以找到pycaffe文件夹，把里面的caffe文件夹拷贝到Python安装目录下的Lib\site-packages中，然后用CMD打开Python并尝试导入caffe模块：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> caffe</span><br><span class="line"></span><br><span class="line"><span class="comment">#如果正常导入，说明添加成功，否则需要根据错误提示安装所需依赖包。</span></span><br><span class="line"><span class="comment">#所需依赖至少包括numpy、scikit-image、scipy、protobuf</span></span><br></pre></td></tr></table></figure>
 
-<p><strong>PS:如果之前已经已经搭建过Hexo博客，到这一步就可以结束了，只需要把原来的blog文件夹复制到新的电脑即可正常使用原来配置好的Hexo博客系统了。</strong></p>
-<p>3.新建一个blog文件夹，在这个文件夹下选择鼠标右键的Git Bash Here命令，初始化hexo在blog文件夹生成本地博客系统，在git bash下输入命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+<h4 id="3-安装绘图脚本所需依赖"><a href="#3-安装绘图脚本所需依赖" class="headerlink" title="3.安装绘图脚本所需依赖"></a>3.安装绘图脚本所需依赖</h4><p><strong>1.安装pydot包</strong></p>
+<p><strong>2.安装Graphviz软件:</strong></p>
+<ol>
+<li><p>在<a href="https://www2.graphviz.org/Packages/stable/windows/10/cmake/Release/x64/" target="_blank" rel="noopener">Graphviz官网</a>下载安装包；</p>
+</li>
+<li><p>安装Graphviz并将安装目录下的\bin添加到系统环境变量Path；</p>
+</li>
+<li><p><strong>以管理员方式打开</strong>CMD运行以下命令完成配置:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dot -c</span><br></pre></td></tr></table></figure>
 
-<p>注意：这里如果失败，要把blog文件夹清空，再重复初始化操作。</p>
-<p>4.安装hexo-deployer-git组件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="4-用CMD调用Python执行绘图脚本draw-net-py"><a href="#4-用CMD调用Python执行绘图脚本draw-net-py" class="headerlink" title="4.用CMD调用Python执行绘图脚本draw_net.py"></a>4.用CMD调用Python执行绘图脚本draw_net.py</h4><p>draw_net.py位于caffe-master\python目录，可以把自己的网络模型配置文件train_test.prototxt拷贝到该目录，并<strong>在该目录运行</strong>CMD，然后执行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">python draw_net.py --rankdir LR train_test.prototxt 网络结构图.jpg</span><br><span class="line"></span><br><span class="line">#参数--rankdir LR 用来设置网络结构图的摆放方向，可选项有：</span><br><span class="line">#自左向右：LR</span><br><span class="line">#自右向左：RL</span><br><span class="line">#自下而上：BT</span><br><span class="line">#自上而下：TB</span><br></pre></td></tr></table></figure>
 
-<h3 id="3-在Github账户上新建一个repository，其名称要与Github账户名相同"><a href="#3-在Github账户上新建一个repository，其名称要与Github账户名相同" class="headerlink" title="3.在Github账户上新建一个repository，其名称要与Github账户名相同"></a>3.在Github账户上新建一个repository，其名称要与Github账户名相同</h3><h3 id="4-修改博客系统的配置文件blog-config-yml"><a href="#4-修改博客系统的配置文件blog-config-yml" class="headerlink" title="4.修改博客系统的配置文件blog/_config.yml"></a>4.修改博客系统的配置文件blog/_config.yml</h3><p>找到最后的deploy项，将上一步新建的repository的地址复制过来作为repo项，即改成下面这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https:&#x2F;&#x2F;github.com&#x2F;账户名&#x2F;账户名.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-
-<p>注意：冒号与后面的字符之间要留一个空格。</p>
-<p>至此hexo博客基本搭建完成，可以顺利发布博客了。</p>
-<h3 id="5-在blog文件夹下用git-bash执行以下命令发布博客"><a href="#5-在blog文件夹下用git-bash执行以下命令发布博客" class="headerlink" title="5.在blog文件夹下用git bash执行以下命令发布博客"></a>5.在blog文件夹下用git bash执行以下命令发布博客</h3><p>1.新建博客文章</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo n &quot;文章名&quot;</span><br></pre></td></tr></table></figure>
-
-<p>该命令在blog/source/_posts/下生成”文章名.md“文件，可以用编辑器在里面先写好文章</p>
-<p>2.执行清理命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
-
-<p>3.执行生成命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
-
-<p>4.本地预览</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-<p>此后可以在“localhost:4000”访问本地博客。</p>
-<p>5.部署到Github</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>此后可以在“账户名.github.io”访问部署到Github的博客。</p>
-<hr>
-<h2 id="更换主题"><a href="#更换主题" class="headerlink" title="更换主题"></a>更换主题</h2><p>1.从github下载主题包解压到blog/themes/new-theme里；</p>
-<p>2.修改blog/_config.yml文件的theme项，改为新的主题文件夹名new-theme；</p>
-<p>3.此时主题更换完成，在下一次部署时就会生效，主题个性化定制可通过修改主题跟目录下的_config.yml文件实现。</p>
+<p>就会在caffe-master\python目录下生成“网络结构图.jpg”。</p>
 
     </div>
 
@@ -332,7 +310,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://leifyan.gitee.io/2020/02/25/Hexo-Github%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%B5%81%E7%A8%8B(win)/" title="Hexo+Github博客搭建流程(win)">https://leifyan.gitee.io/2020/02/25/Hexo-Github博客搭建流程(win)/</a>
+    <a href="https://leifyan.gitee.io/2020/10/26/Win10%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%94%A8draw-net.py%E7%BB%98%E5%88%B6Caffe%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E5%9B%BE/" title="Win10环境下用draw-net.py绘制Caffe模型的网络结构图">https://leifyan.gitee.io/2020/10/26/Win10环境下用draw-net.py绘制Caffe模型的网络结构图/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -363,8 +341,11 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/Hexo/" rel="tag"><i class="fa fa-tag"></i> Hexo</a>
-              <a href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="tag"><i class="fa fa-tag"></i> 博客搭建</a>
+              <a href="/tags/Caffe/" rel="tag"><i class="fa fa-tag"></i> Caffe</a>
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 深度学习</a>
+              <a href="/tags/Win10/" rel="tag"><i class="fa fa-tag"></i> Win10</a>
+              <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+              <a href="/tags/%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag"><i class="fa fa-tag"></i> 可视化</a>
           </div>
 
         
@@ -372,11 +353,11 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2020/03/14/Hexo%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96%E2%80%94%E2%80%94%E9%80%9A%E8%BF%87gulp%E5%8E%8B%E7%BC%A9%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6/" rel="next" title="Hexo博客优化——通过gulp压缩静态文件">
-      Hexo博客优化——通过gulp压缩静态文件 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/10/24/hello-world/" rel="prev" title="Hello World">
+      <i class="fa fa-chevron-left"></i> Hello World
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -436,7 +417,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前期准备"><span class="nav-number">1.</span> <span class="nav-text">前期准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-注册Github账号"><span class="nav-number">1.1.</span> <span class="nav-text">1.注册Github账号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-下载nodejs-Git官方安装包"><span class="nav-number">1.2.</span> <span class="nav-text">2.下载nodejs+Git官方安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-保证网络畅通"><span class="nav-number">1.3.</span> <span class="nav-text">3.保证网络畅通</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建与发布"><span class="nav-number">2.</span> <span class="nav-text">搭建与发布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-安装nodejs和Git"><span class="nav-number">2.1.</span> <span class="nav-text">1.安装nodejs和Git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-以管理员的方式运行CMD进行下面的操作"><span class="nav-number">2.2.</span> <span class="nav-text">2.以管理员的方式运行CMD进行下面的操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-在Github账户上新建一个repository，其名称要与Github账户名相同"><span class="nav-number">2.3.</span> <span class="nav-text">3.在Github账户上新建一个repository，其名称要与Github账户名相同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-修改博客系统的配置文件blog-config-yml"><span class="nav-number">2.4.</span> <span class="nav-text">4.修改博客系统的配置文件blog&#x2F;_config.yml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-在blog文件夹下用git-bash执行以下命令发布博客"><span class="nav-number">2.5.</span> <span class="nav-text">5.在blog文件夹下用git bash执行以下命令发布博客</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更换主题"><span class="nav-number">3.</span> <span class="nav-text">更换主题</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-编译pycaffe项目"><span class="nav-number">1.</span> <span class="nav-text">1.编译pycaffe项目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-为Python添加Caffe模块"><span class="nav-number">2.</span> <span class="nav-text">2.为Python添加Caffe模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-安装绘图脚本所需依赖"><span class="nav-number">3.</span> <span class="nav-text">3.安装绘图脚本所需依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-用CMD调用Python执行绘图脚本draw-net-py"><span class="nav-number">4.</span> <span class="nav-text">4.用CMD调用Python执行绘图脚本draw_net.py</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
