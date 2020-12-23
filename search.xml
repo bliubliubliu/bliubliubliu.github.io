@@ -1,6 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>解决Qt5连接MySQL时报错：QSqlDatabase: QMYSQL driver not loaded</title>
+    <url>/2020/12/23/%E8%A7%A3%E5%86%B3Qt5%E8%BF%9E%E6%8E%A5MySQL%E6%97%B6%E6%8A%A5%E9%94%99%EF%BC%9AQSqlDatabase-QMYSQL-driver-not-loaded/</url>
+    <content><![CDATA[<h3 id="解决Qt5连接MySQL时报错：QSqlDatabase-QMYSQL-driver-not-loaded"><a href="#解决Qt5连接MySQL时报错：QSqlDatabase-QMYSQL-driver-not-loaded" class="headerlink" title="解决Qt5连接MySQL时报错：QSqlDatabase: QMYSQL driver not loaded"></a>解决Qt5连接MySQL时报错：QSqlDatabase: QMYSQL driver not loaded</h3><h4 id="1-确保编程环境搭建正确"><a href="#1-确保编程环境搭建正确" class="headerlink" title="1.确保编程环境搭建正确"></a>1.确保编程环境搭建正确</h4><ol>
+<li><p>安装Qt时记得勾选source（<strong>源码</strong>）；</p>
+</li>
+<li><p>MySQL的位数需要与所用Qt开发套件的<strong>位数一致</strong>，如64bit的MySQL对应msvc2015_64。</p>
+</li>
+</ol>
+<a id="more"></a>
+
+<h4 id="2-检查所用Qt开发套件目录下是否存在MySQL插件"><a href="#2-检查所用Qt开发套件目录下是否存在MySQL插件" class="headerlink" title="2.检查所用Qt开发套件目录下是否存在MySQL插件"></a>2.检查所用Qt开发套件目录下是否存在MySQL插件</h4><ol>
+<li><p>检查Qt安装目录，到所用开发套件的目录下查看是否有MySQL插件，以msvc2015_64为例，查看下面这个目录中是否存在qsqlmysql.dll和qsqlmysqld.dll。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\Qt\Qt5.12.4\5.12.4\msvc2015_64\plugins\sqldrivers</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>PS:如果Qt版本较高，大概率是不存在这两个dll文件的，就算存在，也需要确保它们跟你安装的MySQL版本相对应，这就需要根据Qt源码和已安装的MySQL版本编译出合适的qsqlmysql.dll和qsqlmysqld.dll。</p>
+<h4 id="3-根据Qt源码中的mysql项目编译MySQL插件（基于Qt-Creator）"><a href="#3-根据Qt源码中的mysql项目编译MySQL插件（基于Qt-Creator）" class="headerlink" title="3.根据Qt源码中的mysql项目编译MySQL插件（基于Qt Creator）"></a>3.根据Qt源码中的mysql项目编译MySQL插件（基于Qt Creator）</h4><ol>
+<li><p>如果安装Qt时勾选了源码，在Qt安装目录下可以找到mysql项目：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\Qt\Qt5.12.4\5.12.4\Src\qtbase\src\plugins\sqldrivers\mysql\mysql.pro</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>双击mysql.pro用Qt Creator打开项目，用下面的代码覆盖mysql.pro文件中原来的代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">TARGET &#x3D; qsqlmysql</span><br><span class="line"></span><br><span class="line">HEADERS +&#x3D; $$PWD&#x2F;qsql_mysql_p.h</span><br><span class="line">SOURCES +&#x3D; $$PWD&#x2F;qsql_mysql.cpp $$PWD&#x2F;main.cpp</span><br><span class="line"></span><br><span class="line">#这一句需要注释掉，不然报错说找不到mysql库</span><br><span class="line">#QMAKE_USE +&#x3D; mysql</span><br><span class="line"></span><br><span class="line">OTHER_FILES +&#x3D; mysql.json</span><br><span class="line"></span><br><span class="line">PLUGIN_CLASS_NAME &#x3D; QMYSQLDriverPlugin</span><br><span class="line">include(..&#x2F;qsqldriverbase.pri)</span><br><span class="line"></span><br><span class="line">#下面的四项需要根据具体的情况自定义</span><br><span class="line"></span><br><span class="line">#前三项指定MySQL的库文件和头文件路径，可根据自己的安装路径替换.</span><br><span class="line">#或者可以用Qt自动生成代码：鼠标右键-&gt;添加库-&gt;外部库，在库文件选项后点击</span><br><span class="line">#“浏览”，找到MySQL安装路径下的lib目录，选中其中的libmysql.lib添加</span><br><span class="line">#进去，然后把下面的复选框全部去掉对勾，之后点击下一步，完成后就会自动添</span><br><span class="line">#加下面的三项</span><br><span class="line">win32: LIBS +&#x3D; -L$$PWD&#x2F;&#39;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;Program Files&#x2F;MySQL&#x2F;MySQL Server 5.7&#x2F;lib&#x2F;&#39; -llibmysql</span><br><span class="line">INCLUDEPATH +&#x3D; $$PWD&#x2F;&#39;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;Program Files&#x2F;MySQL&#x2F;MySQL Server 5.7&#x2F;include&#39;</span><br><span class="line">DEPENDPATH +&#x3D; $$PWD&#x2F;&#39;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;Program Files&#x2F;MySQL&#x2F;MySQL Server 5.7&#x2F;include&#39;</span><br><span class="line">#这一项是为了设置生成的MySQL插件的存放位置</span><br><span class="line">#如果不写这一项，默认存在Qt安装目录所在盘的根目录下的#\plugins\sqldrivers中</span><br><span class="line">DESTDIR &#x3D; D:\DLL</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后点击Qt Creator界面左侧的“项目”，确保Build &amp; Run中选择的是正确的开发套件，例如本文用的就是msvc2015_64，也就是选中Desktop Qt 5.12.4 MSVC2015 64bit.</p>
+</li>
+<li><p>点击工具栏上的“构建”-&gt;“执行qmake”,成功之后再点击Qt Creator界面左下角的锤子按钮进行构建，如果成功构建，恭喜你！可以在设置的位置找到qsqlmysql.dll和qsqlmysqld.dll了。</p>
+</li>
+</ol>
+<h4 id="4-添加MySQL插件"><a href="#4-添加MySQL插件" class="headerlink" title="4.添加MySQL插件"></a>4.添加MySQL插件</h4><ol>
+<li><p>把上一步编译生成的qsqlmysql.dll和qsqlmysqld.dll拷贝到所用Qt开发套件的数据库插件目录下，仍以msvc2015_64为例，就是下面这个目录：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\Qt\Qt5.12.4\5.12.4\msvc2015_64\plugins\sqldrivers</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<h4 id="5-向Qt安装目录添加MySQL动态库文件"><a href="#5-向Qt安装目录添加MySQL动态库文件" class="headerlink" title="5.向Qt安装目录添加MySQL动态库文件"></a>5.向Qt安装目录添加MySQL动态库文件</h4><ol>
+<li><p>仍以msvc2015_64开发套件为例，把MySQL安装目录下的lib文件夹下的libmysql.dll拷贝到Qt安装目录下的对应位置：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\Qt\Qt5.12.4\5.12.4\msvc2015_64\bin</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="6-大功告成"><a href="#6-大功告成" class="headerlink" title="6.大功告成"></a>6.大功告成</h4>]]></content>
+      <categories>
+        <category>报错问题</category>
+      </categories>
+      <tags>
+        <tag>Qt5</tag>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Win10环境下用draw-net.py绘制Caffe模型的网络结构图</title>
     <url>/2020/10/26/Win10%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%94%A8draw-net.py%E7%BB%98%E5%88%B6Caffe%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E5%9B%BE/</url>
     <content><![CDATA[<h4 id="1-编译pycaffe项目"><a href="#1-编译pycaffe项目" class="headerlink" title="1.编译pycaffe项目"></a>1.编译pycaffe项目</h4><p>Caffe提供了Python接口，用Visual Studio 2013打开caffe-master\window目录下的Caffe.sln，修改文件CommonSettings.props的<strong>PythonSupport</strong>项为true，并在<strong>PythonDir</strong>项添加本机的Python安装路径，推荐用Python2，Python3编译时会报错，例如：</p>
@@ -1177,8 +1230,8 @@ y: [1×1 sym]   ??？【这里应该有两组解的】</code></pre><blockquote>
         <category>学习笔记</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>MySQL</tag>
+        <tag>笔记</tag>
         <tag>数据库</tag>
       </tags>
   </entry>
