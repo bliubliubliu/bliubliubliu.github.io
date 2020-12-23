@@ -3,7 +3,7 @@
   <entry>
     <title>解决Qt5连接MySQL时报错：QSqlDatabase: QMYSQL driver not loaded</title>
     <url>/2020/12/23/%E8%A7%A3%E5%86%B3Qt5%E8%BF%9E%E6%8E%A5MySQL%E6%97%B6%E6%8A%A5%E9%94%99%EF%BC%9AQSqlDatabase-QMYSQL-driver-not-loaded/</url>
-    <content><![CDATA[<h3 id="解决Qt5连接MySQL时报错：QSqlDatabase-QMYSQL-driver-not-loaded"><a href="#解决Qt5连接MySQL时报错：QSqlDatabase-QMYSQL-driver-not-loaded" class="headerlink" title="解决Qt5连接MySQL时报错：QSqlDatabase: QMYSQL driver not loaded"></a>解决Qt5连接MySQL时报错：QSqlDatabase: QMYSQL driver not loaded</h3><h4 id="1-确保编程环境搭建正确"><a href="#1-确保编程环境搭建正确" class="headerlink" title="1.确保编程环境搭建正确"></a>1.确保编程环境搭建正确</h4><ol>
+    <content><![CDATA[<h4 id="1-确保编程环境搭建正确"><a href="#1-确保编程环境搭建正确" class="headerlink" title="1.确保编程环境搭建正确"></a>1.确保编程环境搭建正确</h4><ol>
 <li><p>安装Qt时记得勾选source（<strong>源码</strong>）；</p>
 </li>
 <li><p>MySQL的位数需要与所用Qt开发套件的<strong>位数一致</strong>，如64bit的MySQL对应msvc2015_64。</p>
