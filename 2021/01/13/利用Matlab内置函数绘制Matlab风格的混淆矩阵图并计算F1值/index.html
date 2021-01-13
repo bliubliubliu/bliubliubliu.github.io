@@ -20,21 +20,21 @@
     var CONFIG = {"hostname":"leifyan.gitee.io","root":"/","scheme":"Mist","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="1.打开CMD,输入以下命令1ssh-keygen -t rsa -C &quot;填一个邮箱&quot;  2.可以连续回车不设置密码，生成密钥文件3.打开路径”C:&#x2F;username&#x2F;.ssh”中的.pub文件全选复制ssh公钥4.在coding或github等个人账户设置处添加ssh公钥5.回到CMD用下面的命令测试不同平台的连接123ssh -T git@gitee.comssh -T g">
+  <meta name="description" content="新建一个.m文件，复制以下代码即可定义函数PlotConfusion，直接按要求调用即可：12345678910111213141516171819202122232425262728293031323334353637383940414243function F1&#x3D;PlotConfusion(confusion_matrix)%输入混淆矩阵，绘制混淆矩阵图%列的方向是真实值，行的方向是预测值%或">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Win10下生成ssh公钥">
-<meta property="og:url" content="https://leifyan.gitee.io/2020/09/01/Win10%E4%B8%8B%E7%94%9F%E6%88%90ssh%E5%85%AC%E9%92%A5/">
+<meta property="og:title" content="利用Matlab内置函数绘制Matlab风格的混淆矩阵图并计算F1值">
+<meta property="og:url" content="https://leifyan.gitee.io/2021/01/13/%E5%88%A9%E7%94%A8Matlab%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E7%BB%98%E5%88%B6Matlab%E9%A3%8E%E6%A0%BC%E7%9A%84%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5%E5%9B%BE%E5%B9%B6%E8%AE%A1%E7%AE%97F1%E5%80%BC/">
 <meta property="og:site_name" content="Leif的博客">
-<meta property="og:description" content="1.打开CMD,输入以下命令1ssh-keygen -t rsa -C &quot;填一个邮箱&quot;  2.可以连续回车不设置密码，生成密钥文件3.打开路径”C:&#x2F;username&#x2F;.ssh”中的.pub文件全选复制ssh公钥4.在coding或github等个人账户设置处添加ssh公钥5.回到CMD用下面的命令测试不同平台的连接123ssh -T git@gitee.comssh -T g">
+<meta property="og:description" content="新建一个.m文件，复制以下代码即可定义函数PlotConfusion，直接按要求调用即可：12345678910111213141516171819202122232425262728293031323334353637383940414243function F1&#x3D;PlotConfusion(confusion_matrix)%输入混淆矩阵，绘制混淆矩阵图%列的方向是真实值，行的方向是预测值%或">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-09-01T13:10:48.000Z">
-<meta property="article:modified_time" content="2020-10-02T10:57:06.848Z">
+<meta property="article:published_time" content="2021-01-13T10:40:20.000Z">
+<meta property="article:modified_time" content="2021-01-13T10:52:37.610Z">
 <meta property="article:author" content="Leif">
-<meta property="article:tag" content="Win10">
-<meta property="article:tag" content="ssh">
+<meta property="article:tag" content="Matlab">
+<meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://leifyan.gitee.io/2020/09/01/Win10%E4%B8%8B%E7%94%9F%E6%88%90ssh%E5%85%AC%E9%92%A5/">
+<link rel="canonical" href="https://leifyan.gitee.io/2021/01/13/%E5%88%A9%E7%94%A8Matlab%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E7%BB%98%E5%88%B6Matlab%E9%A3%8E%E6%A0%BC%E7%9A%84%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5%E5%9B%BE%E5%B9%B6%E8%AE%A1%E7%AE%97F1%E5%80%BC/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>Win10下生成ssh公钥 | Leif的博客</title>
+  <title>利用Matlab内置函数绘制Matlab风格的混淆矩阵图并计算F1值 | Leif的博客</title>
   
 
 
@@ -186,7 +186,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://leifyan.gitee.io/2020/09/01/Win10%E4%B8%8B%E7%94%9F%E6%88%90ssh%E5%85%AC%E9%92%A5/">
+    <link itemprop="mainEntityOfPage" href="https://leifyan.gitee.io/2021/01/13/%E5%88%A9%E7%94%A8Matlab%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E7%BB%98%E5%88%B6Matlab%E9%A3%8E%E6%A0%BC%E7%9A%84%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5%E5%9B%BE%E5%B9%B6%E8%AE%A1%E7%AE%97F1%E5%80%BC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/sheep.PNG">
@@ -199,7 +199,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Win10下生成ssh公钥
+          利用Matlab内置函数绘制Matlab风格的混淆矩阵图并计算F1值
         </h1>
 
         <div class="post-meta">
@@ -208,23 +208,17 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-09-01 21:10:48" itemprop="dateCreated datePublished" datetime="2020-09-01T21:10:48+08:00">2020-09-01</time>
+              <time title="创建时间：2021-01-13 18:40:20 / 修改时间：18:52:37" itemprop="dateCreated datePublished" datetime="2021-01-13T18:40:20+08:00">2021-01-13</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-02 18:57:06" itemprop="dateModified" datetime="2020-10-02T18:57:06+08:00">2020-10-02</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">技巧</span></a>
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
                 </span>
             </span>
 
@@ -234,7 +228,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>249</span>
+              <span>1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -253,11 +247,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h5 id="1-打开CMD-输入以下命令"><a href="#1-打开CMD-输入以下命令" class="headerlink" title="1.打开CMD,输入以下命令"></a>1.打开CMD,输入以下命令</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;填一个邮箱&quot;</span><br></pre></td></tr></table></figure>
+        <h4 id="新建一个-m文件，复制以下代码即可定义函数PlotConfusion，直接按要求调用即可："><a href="#新建一个-m文件，复制以下代码即可定义函数PlotConfusion，直接按要求调用即可：" class="headerlink" title="新建一个.m文件，复制以下代码即可定义函数PlotConfusion，直接按要求调用即可："></a>新建一个.m文件，复制以下代码即可定义函数PlotConfusion，直接按要求调用即可：</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">F1</span>=<span class="title">PlotConfusion</span><span class="params">(confusion_matrix)</span></span></span><br><span class="line"><span class="comment">%输入混淆矩阵，绘制混淆矩阵图</span></span><br><span class="line"><span class="comment">%列的方向是真实值，行的方向是预测值</span></span><br><span class="line"><span class="comment">%或者说是x轴为真实标签，y轴是预测标签，原点在左上角</span></span><br><span class="line"><span class="comment">%返回值F1是每个类别的recall和precision的调和平均值，按行排列</span></span><br><span class="line"><span class="comment">%例如：f1=PlotConfusion([12,3;15,2]);</span></span><br><span class="line"></span><br><span class="line">[label_num,~]=<span class="built_in">size</span>(confusion_matrix);</span><br><span class="line">sum_lable=sum(confusion_matrix);</span><br><span class="line">sum_pre_lable=sum((confusion_matrix'));</span><br><span class="line">precision=<span class="built_in">zeros</span>(<span class="number">1</span>,label_num);</span><br><span class="line">recall=<span class="built_in">zeros</span>(<span class="number">1</span>,label_num);</span><br><span class="line">F1=<span class="built_in">zeros</span>(<span class="number">1</span>,label_num);</span><br><span class="line"><span class="comment">%构造plotconfusion函数的输入</span></span><br><span class="line">labels=[];</span><br><span class="line">predicted_labels=[];</span><br><span class="line"><span class="keyword">for</span> col=<span class="number">1</span>:label_num</span><br><span class="line">   <span class="keyword">for</span> row=<span class="number">1</span>:label_num</span><br><span class="line">       num=confusion_matrix(row,col);</span><br><span class="line">       <span class="comment">%计算recall和precision</span></span><br><span class="line">       <span class="keyword">if</span>(row==col)</span><br><span class="line">           recall(row)=num/sum_lable(row);</span><br><span class="line">           precision(row)=num/sum_pre_lable(row);</span><br><span class="line">       <span class="keyword">end</span></span><br><span class="line">       <span class="comment">%构造过程</span></span><br><span class="line">       temp=<span class="built_in">zeros</span>(label_num,num);</span><br><span class="line">       temp_pre=temp;</span><br><span class="line">       one_row=<span class="built_in">ones</span>(<span class="number">1</span>,num);</span><br><span class="line">       temp(col,:)=one_row;</span><br><span class="line">       temp_pre(row,:)=one_row;</span><br><span class="line">       labels=[labels,temp];</span><br><span class="line">       predicted_labels=[predicted_labels,temp_pre];</span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">%绘制混淆矩阵</span></span><br><span class="line">plotconfusion(labels,predicted_labels);</span><br><span class="line"></span><br><span class="line"><span class="comment">%计算各类F1指标</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:label_num</span><br><span class="line">    F1(<span class="built_in">i</span>)=<span class="number">2</span>*recall(<span class="built_in">i</span>)*precision(<span class="built_in">i</span>)/(recall(<span class="built_in">i</span>)+precision(<span class="built_in">i</span>));</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
-<h5 id="2-可以连续回车不设置密码，生成密钥文件"><a href="#2-可以连续回车不设置密码，生成密钥文件" class="headerlink" title="2.可以连续回车不设置密码，生成密钥文件"></a>2.可以连续回车不设置密码，生成密钥文件</h5><h5 id="3-打开路径”C-username-ssh”中的-pub文件全选复制ssh公钥"><a href="#3-打开路径”C-username-ssh”中的-pub文件全选复制ssh公钥" class="headerlink" title="3.打开路径”C:/username/.ssh”中的.pub文件全选复制ssh公钥"></a>3.打开路径”C:/username/.ssh”中的.pub文件全选复制ssh公钥</h5><h5 id="4-在coding或github等个人账户设置处添加ssh公钥"><a href="#4-在coding或github等个人账户设置处添加ssh公钥" class="headerlink" title="4.在coding或github等个人账户设置处添加ssh公钥"></a>4.在coding或github等个人账户设置处添加ssh公钥</h5><h5 id="5-回到CMD用下面的命令测试不同平台的连接"><a href="#5-回到CMD用下面的命令测试不同平台的连接" class="headerlink" title="5.回到CMD用下面的命令测试不同平台的连接"></a>5.回到CMD用下面的命令测试不同平台的连接</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@gitee.com</span><br><span class="line">ssh -T git@github.com</span><br><span class="line">ssh -T git@e.coding.net</span><br></pre></td></tr></table></figure>
-
-<p>ps:回车后有询问，键入yes回车，提示成功即可。</p>
 
     </div>
 
@@ -293,7 +284,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://leifyan.gitee.io/2020/09/01/Win10%E4%B8%8B%E7%94%9F%E6%88%90ssh%E5%85%AC%E9%92%A5/" title="Win10下生成ssh公钥">https://leifyan.gitee.io/2020/09/01/Win10下生成ssh公钥/</a>
+    <a href="https://leifyan.gitee.io/2021/01/13/%E5%88%A9%E7%94%A8Matlab%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E7%BB%98%E5%88%B6Matlab%E9%A3%8E%E6%A0%BC%E7%9A%84%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5%E5%9B%BE%E5%B9%B6%E8%AE%A1%E7%AE%97F1%E5%80%BC/" title="利用Matlab内置函数绘制Matlab风格的混淆矩阵图并计算F1值">https://leifyan.gitee.io/2021/01/13/利用Matlab内置函数绘制Matlab风格的混淆矩阵图并计算F1值/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -324,8 +315,8 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/Win10/" rel="tag"><i class="fa fa-tag"></i> Win10</a>
-              <a href="/tags/ssh/" rel="tag"><i class="fa fa-tag"></i> ssh</a>
+              <a href="/tags/Matlab/" rel="tag"><i class="fa fa-tag"></i> Matlab</a>
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
           </div>
 
         
@@ -334,13 +325,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/08/31/Matlab%E7%AC%94%E8%AE%B0/" rel="prev" title="Matlab笔记">
-      <i class="fa fa-chevron-left"></i> Matlab笔记
+    <a href="/2021/01/12/win10%E4%B8%8B%E4%B8%BACaffe%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%82ConfusionLayer%E7%BB%9F%E8%AE%A1%E5%B9%B6%E8%BE%93%E5%87%BA%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5/" rel="prev" title="Win10下为Caffe添加自定义层ConfusionLayer统计并输出混淆矩阵">
+      <i class="fa fa-chevron-left"></i> Win10下为Caffe添加自定义层ConfusionLayer统计并输出混淆矩阵
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/10/02/Caffe%E5%AE%89%E8%A3%85-Win10-GPU/" rel="next" title="Caffe安装(Win10+GPU)">
-      Caffe安装(Win10+GPU) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -400,7 +388,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-打开CMD-输入以下命令"><span class="nav-number">1.</span> <span class="nav-text">1.打开CMD,输入以下命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-可以连续回车不设置密码，生成密钥文件"><span class="nav-number">2.</span> <span class="nav-text">2.可以连续回车不设置密码，生成密钥文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-打开路径”C-username-ssh”中的-pub文件全选复制ssh公钥"><span class="nav-number">3.</span> <span class="nav-text">3.打开路径”C:&#x2F;username&#x2F;.ssh”中的.pub文件全选复制ssh公钥</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-在coding或github等个人账户设置处添加ssh公钥"><span class="nav-number">4.</span> <span class="nav-text">4.在coding或github等个人账户设置处添加ssh公钥</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-回到CMD用下面的命令测试不同平台的连接"><span class="nav-number">5.</span> <span class="nav-text">5.回到CMD用下面的命令测试不同平台的连接</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#新建一个-m文件，复制以下代码即可定义函数PlotConfusion，直接按要求调用即可："><span class="nav-number">1.</span> <span class="nav-text">新建一个.m文件，复制以下代码即可定义函数PlotConfusion，直接按要求调用即可：</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

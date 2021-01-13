@@ -118,7 +118,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">13</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">14</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">16</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">17</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -178,6 +178,89 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leifyan.gitee.io/2021/01/13/%E5%88%A9%E7%94%A8Matlab%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E7%BB%98%E5%88%B6Matlab%E9%A3%8E%E6%A0%BC%E7%9A%84%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5%E5%9B%BE%E5%B9%B6%E8%AE%A1%E7%AE%97F1%E5%80%BC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/sheep.PNG">
+      <meta itemprop="name" content="Leif">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Leif的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/13/%E5%88%A9%E7%94%A8Matlab%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E7%BB%98%E5%88%B6Matlab%E9%A3%8E%E6%A0%BC%E7%9A%84%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5%E5%9B%BE%E5%B9%B6%E8%AE%A1%E7%AE%97F1%E5%80%BC/" class="post-title-link" itemprop="url">利用Matlab内置函数绘制Matlab风格的混淆矩阵图并计算F1值</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-01-13 18:40:20 / 修改时间：18:52:37" itemprop="dateCreated datePublished" datetime="2021-01-13T18:40:20+08:00">2021-01-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="新建一个-m文件，复制以下代码即可定义函数PlotConfusion，直接按要求调用即可："><a href="#新建一个-m文件，复制以下代码即可定义函数PlotConfusion，直接按要求调用即可：" class="headerlink" title="新建一个.m文件，复制以下代码即可定义函数PlotConfusion，直接按要求调用即可："></a>新建一个.m文件，复制以下代码即可定义函数PlotConfusion，直接按要求调用即可：</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">F1</span>=<span class="title">PlotConfusion</span><span class="params">(confusion_matrix)</span></span></span><br><span class="line"><span class="comment">%输入混淆矩阵，绘制混淆矩阵图</span></span><br><span class="line"><span class="comment">%列的方向是真实值，行的方向是预测值</span></span><br><span class="line"><span class="comment">%或者说是x轴为真实标签，y轴是预测标签，原点在左上角</span></span><br><span class="line"><span class="comment">%返回值F1是每个类别的recall和precision的调和平均值，按行排列</span></span><br><span class="line"><span class="comment">%例如：f1=PlotConfusion([12,3;15,2]);</span></span><br><span class="line"></span><br><span class="line">[label_num,~]=<span class="built_in">size</span>(confusion_matrix);</span><br><span class="line">sum_lable=sum(confusion_matrix);</span><br><span class="line">sum_pre_lable=sum((confusion_matrix'));</span><br><span class="line">precision=<span class="built_in">zeros</span>(<span class="number">1</span>,label_num);</span><br><span class="line">recall=<span class="built_in">zeros</span>(<span class="number">1</span>,label_num);</span><br><span class="line">F1=<span class="built_in">zeros</span>(<span class="number">1</span>,label_num);</span><br><span class="line"><span class="comment">%构造plotconfusion函数的输入</span></span><br><span class="line">labels=[];</span><br><span class="line">predicted_labels=[];</span><br><span class="line"><span class="keyword">for</span> col=<span class="number">1</span>:label_num</span><br><span class="line">   <span class="keyword">for</span> row=<span class="number">1</span>:label_num</span><br><span class="line">       num=confusion_matrix(row,col);</span><br><span class="line">       <span class="comment">%计算recall和precision</span></span><br><span class="line">       <span class="keyword">if</span>(row==col)</span><br><span class="line">           recall(row)=num/sum_lable(row);</span><br><span class="line">           precision(row)=num/sum_pre_lable(row);</span><br><span class="line">       <span class="keyword">end</span></span><br><span class="line">       <span class="comment">%构造过程</span></span><br><span class="line">       temp=<span class="built_in">zeros</span>(label_num,num);</span><br><span class="line">       temp_pre=temp;</span><br><span class="line">       one_row=<span class="built_in">ones</span>(<span class="number">1</span>,num);</span><br><span class="line">       temp(col,:)=one_row;</span><br><span class="line">       temp_pre(row,:)=one_row;</span><br><span class="line">       labels=[labels,temp];</span><br><span class="line">       predicted_labels=[predicted_labels,temp_pre];</span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">%绘制混淆矩阵</span></span><br><span class="line">plotconfusion(labels,predicted_labels);</span><br><span class="line"></span><br><span class="line"><span class="comment">%计算各类F1指标</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:label_num</span><br><span class="line">    F1(<span class="built_in">i</span>)=<span class="number">2</span>*recall(<span class="built_in">i</span>)*precision(<span class="built_in">i</span>)/(recall(<span class="built_in">i</span>)+precision(<span class="built_in">i</span>));</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -1027,104 +1110,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://leifyan.gitee.io/2020/08/29/MySQL%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/sheep.PNG">
-      <meta itemprop="name" content="Leif">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Leif的博客">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/29/MySQL%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">MySQL基础学习笔记</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-08-29 21:08:51" itemprop="dateCreated datePublished" datetime="2020-08-29T21:08:51+08:00">2020-08-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-02 19:11:12" itemprop="dateModified" datetime="2020-10-02T19:11:12+08:00">2020-10-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>57k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>52 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="MySQL基础学习笔记"><a href="#MySQL基础学习笔记" class="headerlink" title="MySQL基础学习笔记"></a>MySQL基础学习笔记</h2><h4 id="了解相关概念："><a href="#了解相关概念：" class="headerlink" title="了解相关概念："></a>了解相关概念：</h4><p>数据库作用：数据持久化，结构化查询，便于管理</p>
-<p>DB:数据仓库;    </p>
-<p>DBMS：数据库管理系统，MySQL，Oracle，DB2，SqlServer；</p>
-<p>SQL:    结构化查询语言，用于与数据库通信的语言，是几乎所有主流数据库软件的通用语言。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/08/29/MySQL%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1197,7 +1182,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1210,7 +1195,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1244,12 +1229,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">134k</span>
+    <span title="站点总字数">135k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:02</span>
+    <span title="站点阅读时长">2:03</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
   </div>
