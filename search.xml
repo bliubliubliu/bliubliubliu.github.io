@@ -10,6 +10,8 @@
 <li>安装<a href="https://cmake.org/download/" target="_blank" rel="noopener">CMake</a></li>
 <li>安装<a href="https://www.anaconda.com/products/individual" target="_blank" rel="noopener">Anaconda</a></li>
 </ol>
+<a id="more"></a>
+
 <p>以上所有安装均可轻易找到大量教程，此处不再赘述。</p>
 <h3 id="二、搜集样本"><a href="#二、搜集样本" class="headerlink" title="二、搜集样本"></a>二、搜集样本</h3><p>运行这篇博客的Python脚本，可以快速搜集目标样本集，亲测可用：</p>
 <p><a href="https://blog.csdn.net/qq_40774175/article/details/81273198" target="_blank" rel="noopener">https://blog.csdn.net/qq_40774175/article/details/81273198</a></p>
