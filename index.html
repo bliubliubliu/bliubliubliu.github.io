@@ -118,7 +118,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">14</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">15</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">17</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">18</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -178,6 +178,182 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.leifyan.cn/2021/03/24/Win10%E5%B9%B3%E5%8F%B0%E8%AE%AD%E7%BB%83Yolo-Fastest%E6%A8%A1%E5%9E%8B%E5%85%A8%E6%B5%81%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/sheep.PNG">
+      <meta itemprop="name" content="Leif">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Leif的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/24/Win10%E5%B9%B3%E5%8F%B0%E8%AE%AD%E7%BB%83Yolo-Fastest%E6%A8%A1%E5%9E%8B%E5%85%A8%E6%B5%81%E7%A8%8B/" class="post-title-link" itemprop="url">Win10平台训练Yolo-Fastest模型全流程</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-24 18:49:28" itemprop="dateCreated datePublished" datetime="2021-03-24T18:49:28+08:00">2021-03-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-10 21:06:04" itemprop="dateModified" datetime="2021-04-10T21:06:04+08:00">2021-04-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">使用教程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h3><ol>
+<li>安装vs2015</li>
+<li>根据显卡驱动安装相应版本的<a href="https://developer.nvidia.com/cuda-downloads" target="_blank" rel="noopener">CUDA</a>和<a href="https://developer.nvidia.com/rdp/cudnn-download" target="_blank" rel="noopener">cuDNN</a></li>
+<li>安装<a href="https://sourceforge.net/projects/opencvlibrary/files/4.4.0/opencv-4.4.0-vc14_vc15.exe/download" target="_blank" rel="noopener">OpenCV 4.4.0</a></li>
+<li>安装<a href="https://cmake.org/download/" target="_blank" rel="noopener">CMake</a></li>
+<li>安装<a href="https://www.anaconda.com/products/individual" target="_blank" rel="noopener">Anaconda</a></li>
+</ol>
+<p>以上所有安装均可轻易找到大量教程，此处不再赘述。</p>
+<h3 id="二、搜集样本"><a href="#二、搜集样本" class="headerlink" title="二、搜集样本"></a>二、搜集样本</h3><p>运行这篇博客的Python脚本，可以快速搜集目标样本集，亲测可用：</p>
+<p><a href="https://blog.csdn.net/qq_40774175/article/details/81273198" target="_blank" rel="noopener">https://blog.csdn.net/qq_40774175/article/details/81273198</a></p>
+<h3 id="三、标注样本"><a href="#三、标注样本" class="headerlink" title="三、标注样本"></a>三、标注样本</h3><p>目标检测样本需要把待检测目标在图片中的位置和大小标注出来，采用<strong>LabelImg</strong>标注Yolo样本非常方便，下面介绍使用方法。</p>
+<h4 id="1-用pip安装LabelImg"><a href="#1-用pip安装LabelImg" class="headerlink" title="1.用pip安装LabelImg"></a>1.用pip安装LabelImg</h4><p>安装Anaconda以后，在开始菜单打开Anaconda Prompt (Anaconda3)进入base环境，运行pip命令安装LabelImg：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install labelImg</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-启动LabelImg"><a href="#2-启动LabelImg" class="headerlink" title="2.启动LabelImg"></a>2.启动LabelImg</h4><p>安装好LabelImg之后，在命令行输入程序名回车即可启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LabelImg</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-设置样本类型"><a href="#3-设置样本类型" class="headerlink" title="3.设置样本类型"></a>3.设置样本类型</h4><p>在LabelImg的界面中，左边“<strong>Save</strong>”按钮下方的按钮表示样本类型，<strong>点击即可切换</strong>，将其切换为“<strong>YOLO</strong>”即可。</p>
+<h4 id="4-设置路径"><a href="#4-设置路径" class="headerlink" title="4.设置路径"></a>4.设置路径</h4><p>在LabelImg的界面中，点击左侧的“<strong>Open Dir</strong>”按钮，将目录设置为事先准备好的目标图片文件夹；</p>
+<p>再点击左侧的“<strong>Change Save Dir</strong>”按钮,指定一个输出目录，用于保存每张图片的标注信息文件。</p>
+<h4 id="5-开始标注"><a href="#5-开始标注" class="headerlink" title="5.开始标注"></a>5.开始标注</h4><ol>
+<li><p>设置好“<strong>Open Dir</strong>”后，会自动加载其中的图片，将输入法切换为英文，按下快捷键“W”，然后在图像区域按下鼠标左键拖动，就会出现矩形框；</p>
+</li>
+<li><p>框出目标后会提示输入目标名称（只需输入一次，以后会自动填充），如果有多个目标需要标注，就继续框选，然后输入目标名字即可；</p>
+</li>
+<li><p>待所有目标都被标注完毕后，点击界面左侧的“<strong>save</strong>”按钮，即可保存当前图片的标注信息，到这里第一张图片的标注工作就完成了；</p>
+</li>
+<li><p>之后点击界面左侧的“<strong>Next Image</strong>”按钮，即可开始下一张图片的标注，然后重复第2、3步操作即可；</p>
+</li>
+<li><p>重复第2、3、4步，直到指定目录下的所有图片标注完毕。</p>
+</li>
+</ol>
+<h3 id="四、编译Yolo-Fastest"><a href="#四、编译Yolo-Fastest" class="headerlink" title="四、编译Yolo-Fastest"></a>四、编译Yolo-Fastest</h3><h4 id="1-下载Yolo-Fastest项目源码"><a href="#1-下载Yolo-Fastest项目源码" class="headerlink" title="1.下载Yolo-Fastest项目源码"></a>1.下载Yolo-Fastest项目源码</h4><p>github地址：<a href="https://github.com/dog-qiuqiu/Yolo-Fastest" target="_blank" rel="noopener">https://github.com/dog-qiuqiu/Yolo-Fastest</a></p>
+<p>下载后将源码解压到本地熟悉的路径下，接下来以<strong>D:\Yolo-Fastest-master</strong>为例。</p>
+<h4 id="2-配置Makefile"><a href="#2-配置Makefile" class="headerlink" title="2.配置Makefile"></a>2.配置Makefile</h4><p>在Yolo-Fastest根目录下找到Makefile，用记事本打开，可以看到前面这几项，保持作者的默认配置即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GPU&#x3D;1			#启用GPU加速</span><br><span class="line">CUDNN&#x3D;1			#启用cuDNN,支持v5-v7版本</span><br><span class="line">CUDNN_HALF&#x3D;0</span><br><span class="line">OPENCV&#x3D;1		#启用OpenCV,支持OpenCV 4.x&#x2F;3.x&#x2F;2.4.x</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-用CMake生成解决方案"><a href="#3-用CMake生成解决方案" class="headerlink" title="3.用CMake生成解决方案"></a>3.用CMake生成解决方案</h4><ol>
+<li>打开CMake,将<code>source code</code>路径设置为<code>D:\Yolo-Fastest-master</code>，将目标生成路径也设置为<code>D:\Yolo-Fastest-master</code>；</li>
+<li>然后点击“<strong>Configure</strong>”，设置VS版本为VS2015，目标平台为x64,然后确认；</li>
+<li>若提示没有找到<strong>OPENCV_DIR</strong>，再选择<code>opencv.exe</code>解压缩后的<code>build</code>文件夹为<strong>OPENCV_DIR</strong>的路径即可，可以添加<strong>OPENCV_DIR</strong>环境变量，也可以直接在CMake上面的配置列表中设置；</li>
+<li>然后依次点击“<strong>Generate</strong>”和“<strong>Open Project</strong>”按钮即可打开解决方案。</li>
+</ol>
+<p>如果上面的过程没有其他报错，就可以编译解决方案了。</p>
+<h4 id="4-编译Darknet"><a href="#4-编译Darknet" class="headerlink" title="4.编译Darknet"></a>4.编译Darknet</h4><p>打开上一步生成的的解决方案后，生成整个解决方案，如果不能全部成功编译，可能是OpenCV,CUDA或者cuDNN等的安装不正确，或者版本不合适。</p>
+<p>如果全部正常通过编译，在<code>D:\Yolo-Fastest-master</code>路径下会多出一个<code>Release</code>文件夹，将其中的<strong>darknet.dll</strong>和<strong>darknet.exe</strong>复制到<code>D:\Yolo-Fastest-master/build/darknet/x64</code>目录下。</p>
+<h4 id="5-获取Yolo-Fastest的模型文件和权重文件"><a href="#5-获取Yolo-Fastest的模型文件和权重文件" class="headerlink" title="5.获取Yolo-Fastest的模型文件和权重文件"></a>5.获取Yolo-Fastest的模型文件和权重文件</h4><p>在<code>D:\Yolo-Fastest-master\Yolo-Fastest</code>目录下可以找到COCO或VOC版本的Yolo-Fastest与训练模型，任选一个即可，复制一下4个文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yolo-fastest.cfg</span><br><span class="line">yolo-fastest.weights</span><br><span class="line">yolo-fastest-xl.cfg</span><br><span class="line">yolo-fastest-xl.weights</span><br></pre></td></tr></table></figure>
+
+<p>将上面复制的文件粘贴到<code>D:\Yolo-Fastest-master\build\darknet\x64\cfg</code>文件夹。</p>
+<p>至此，可以用下面的批处理文件测试一下Yolo-Fastest预训练模型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">darknet detector test cfg\voc.data cfg\yolo-fastest.cfg cfg\yolo-fastest.weights data\person.jpg -i 1 -thresh 0.25 -out_filename data\person_output.jpg</span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
+
+<p>将上述命令保存在.txt文件中，然后改文件名后缀为.bat,将.bat文件复制到<code>D:\Yolo-Fastest-master\build\darknet\x64</code>文件夹，然后双击运行，如果能顺利检测，说明目前为止一切正常，已经成功编译了Yolo-Fastest。</p>
+<h3 id="五、在目标数据集上训练Yolo-Fastest"><a href="#五、在目标数据集上训练Yolo-Fastest" class="headerlink" title="五、在目标数据集上训练Yolo-Fastest"></a>五、在目标数据集上训练Yolo-Fastest</h3><h4 id="1-配置训练所用数据集"><a href="#1-配置训练所用数据集" class="headerlink" title="1.配置训练所用数据集"></a>1.配置训练所用数据集</h4><p>数据集的准备包含5个部分，图片、图片对应的标注文件、trainlist.txt和testlist.txt、yourdataset.data、yourdataset.names。</p>
+<ol>
+<li><p>检查数据集：用LabelImg标注好的数据集包含一个标注信息文件夹，即用按钮“<strong>Change Save Dir</strong>”指定的文件夹，里面有一批与图片同名的.txt文件，记录着每张图片的标注信息，还有一个“classes.txt”文件，记录着所有目标类别；</p>
+</li>
+<li><p>准备trainlist.txt和testlist.txt文件：这两个文件分别记录训练集和测试集中每张图片的路径，可用如下批处理脚本获得：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#以下为注释内容，实际使用时应删除</span><br><span class="line">将上面的命令写入一个.txt文件，更改文件名后缀为.bat，然后将.bat文件复制到图片所在文件夹，双击运行即可获得该路径下所有图片的路径，并保存在list.txt文件中。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>准备.names文件：将上一步中的“classes.txt”更名为“yoursataset.names”即可；</p>
+</li>
+<li><p>准备.data文件：新建一个.txt文件，更名为“yourdataset.data”,并写入以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">classes &#x3D; 1</span><br><span class="line">train  &#x3D; data&#x2F;yourdataset&#x2F;trainlist.txt</span><br><span class="line">valid  &#x3D; data&#x2F;yourdataset&#x2F;testlist.txt</span><br><span class="line">names &#x3D; data&#x2F;yourdataset&#x2F;yourdataset.names</span><br><span class="line">backup &#x3D; backup&#x2F;</span><br><span class="line"></span><br><span class="line">#以下为注释内容，实际使用时应删除</span><br><span class="line">上面的选项应根据具体情况修改，其含义如下：</span><br><span class="line">classes:表示要识别的目标的类别数目，也就是.names文件中记录的类目数量；</span><br><span class="line">train:指明trainlist.txt文件所在路径</span><br><span class="line">valid:指明testlist.txt文件所在路径</span><br><span class="line">names:指明.names文件所在路径</span><br><span class="line">backup:指定训练结果保存路径，训练好的权重将保存在这个路径下</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>整理目录结构：所有文件准备完毕后，建议以如下目录结构组织文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">train_set（文件夹）</span><br><span class="line">test_set（文件夹）</span><br><span class="line">yourdataset.data</span><br><span class="line">yourdataset.names</span><br><span class="line">trainlist.txt</span><br><span class="line">testlist.txt</span><br><span class="line"></span><br><span class="line">#重要说明</span><br><span class="line">1.train_set和test_set是文件夹，分别用来放置训练集和测试集，里面应存放着图片文件和相应的标注信息文件；</span><br><span class="line">2.其余4个文件就是前几步获得的文件；</span><br><span class="line">3.所有文件名可以自定义，但要保证跟.data中的设置一致；</span><br><span class="line">4.可以将上述文件和文件夹单独存放到一个文件夹中，例如yourdataset</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>至此，数据集准备完毕，笔者将上述目录结构保存在<code>Yolo-Fastest\build\darknet\x64\data\yourdataset</code>下，接下来将按以此为例进行说明。</p>
+<h4 id="2-配置模型文件yolo-fastest-cfg"><a href="#2-配置模型文件yolo-fastest-cfg" class="headerlink" title="2.配置模型文件yolo-fastest.cfg"></a>2.配置模型文件yolo-fastest.cfg</h4><p>打开之前复制到<code>D:\Yolo-Fastest-master\build\darknet\x64\cfg</code>目录下的模型结构配置文件<code>yolo-fastest.cfg</code>，可以看到整个模型的各项设置,需要自定义配置的主要有以下几处：</p>
+<ol>
+<li>搜索“[net]”，<strong>[net]</strong>字段下是各种训练参数，训练时一般设置<code>batch=64</code>，<code>subdivisions=16</code>，测试时一般设置<code>batch=1</code>，<code>subdivisions=1</code>，其他参数可以保持默认；</li>
+<li>搜索“[yolo]”，将<span style="color:red"><strong>所有</strong></span><strong>[yolo]</strong>字段下的<code>classes</code>项设置为你的目标类别数，然后将<span style="color:red"><strong>每一个</strong></span><strong>[yolo]</strong>字段前<span style="color:red"><strong>紧邻的一个</strong></span><strong>[convolutional]</strong>字段中的<code>filters</code>项重置，计算方法为<code>filters=（classes+1）*3</code></li>
+</ol>
+<p>修改后保存即可。</p>
+<h4 id="3-开始训练Yolo-Fastest"><a href="#3-开始训练Yolo-Fastest" class="headerlink" title="3.开始训练Yolo-Fastest"></a>3.开始训练Yolo-Fastest</h4><p>训练的思路是，先生成预训练模型(骨干网络)，然后在其基础上拿自己的数据集进行训练，完成模型的迁移学习。</p>
+<ol>
+<li><p>生成预训练模型：在<code>D:\Yolo-Fastest-master\build\darknet\x64</code>目录下新建一文件夹<code>pretrained_model</code>，将如下命令写入一.bat文件中，复制文件到<code>D:\Yolo-Fastest-master\build\darknet\x64</code>下，双击运行即可生成预训练模型<code>yolo-fastest.conv.109</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">darknet partial cfg\yolo-fastest.cfg cfg\yolo-fastest.weights pretrained_model\yolo-fastest.conv.109 109</span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开始训练：将以下命令写入一.bat文件，复制文件到<code>D:\Yolo-Fastest-master\build\darknet\x64</code>下，双击运行即可开始训练：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">darknet detector train data\yourdataset\yourdataset.data cfg\yolo-fastest.cfg pretrained_model\yolo-fastest.conv.109 backup\</span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="4-测试训练好的Yolo-Fastest模型"><a href="#4-测试训练好的Yolo-Fastest模型" class="headerlink" title="4.测试训练好的Yolo-Fastest模型"></a>4.测试训练好的Yolo-Fastest模型</h4><p>将以下命令写入一.bat文件，复制文件到<code>D:\Yolo-Fastest-master\build\darknet\x64</code>下，双击运行即可开始测试，测试时根据提示输入待检测图片的路径，即可在<code>D:\Yolo-Fastest-master\build\darknet\x64</code>目录下生成检测结果图片：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">darknet detector test data\yourdataset\yourdataset.data cfg\yolo-fastest.cfg backup\yolo-fastest_last.weights</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -760,10 +936,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-10-16 17:27:26 / 修改时间：17:53:23" itemprop="dateCreated datePublished" datetime="2020-10-16T17:27:26+08:00">2020-10-16</time>
+              <time title="创建时间：2020-10-16 17:27:26" itemprop="dateCreated datePublished" datetime="2020-10-16T17:27:26+08:00">2020-10-16</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-24 18:52:03" itemprop="dateModified" datetime="2021-03-24T18:52:03+08:00">2021-03-24</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -1015,101 +1197,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.leifyan.cn/2020/08/31/Matlab%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/sheep.PNG">
-      <meta itemprop="name" content="Leif">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Leif的博客">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/31/Matlab%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Matlab笔记</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-08-31 15:12:36" itemprop="dateCreated datePublished" datetime="2020-08-31T15:12:36+08:00">2020-08-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-02 19:11:11" itemprop="dateModified" datetime="2020-10-02T19:11:11+08:00">2020-10-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>28k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>26 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>【元胞数组cell】对于元胞数组a,a(i,j)表示对元胞数组a的第i行第j列单元(cell)的直接引用，返回结果是cell类型，而a{i,j}表示对元胞数组a的第i行第j列单元(cell)内存储的变量的引用，返回结果的类型与单元内具体变量的类型一致。<br>【关键字end】end表示矩阵某一维度的末尾下标。对于向量相当于length()函数的返回值。<br>【求矩阵的最大元素】A(:)将二维矩阵A的每一个列向量沿纵向从上到下依次排列构成一个新的列向量B,<br>再调用max(B)即可求得A的最大元素<br>更多【特殊图形绘制函数】参见《matiab图像处理超级学习手册》一书的第三章。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/08/31/Matlab%E7%AC%94%E8%AE%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1182,7 +1269,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1195,7 +1282,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1229,12 +1316,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">136k</span>
+    <span title="站点总字数">140k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:03</span>
+    <span title="站点阅读时长">2:07</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
   </div>
