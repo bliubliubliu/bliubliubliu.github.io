@@ -327,12 +327,12 @@ pred_item=index_to_item[np.argmax(pred[1][0])]</code>这里求最大值索引是
 <h3 id="一维卷积实例——文本分类（暂时略过）"><a href="#一维卷积实例——文本分类（暂时略过）" class="headerlink" title="一维卷积实例——文本分类（暂时略过）"></a>一维卷积实例——文本分类（暂时略过）</h3><h3 id="一维卷积实例——叶子分类（暂时略过）"><a href="#一维卷积实例——叶子分类（暂时略过）" class="headerlink" title="一维卷积实例——叶子分类（暂时略过）"></a>一维卷积实例——叶子分类（暂时略过）</h3><h3 id="一维卷积网络的优化（暂时略过）"><a href="#一维卷积网络的优化（暂时略过）" class="headerlink" title="一维卷积网络的优化（暂时略过）"></a>一维卷积网络的优化（暂时略过）</h3><p>增大深度、宽度、宽度递增、dropout、BN、引入残差等都可以优化网络。</p>
 ]]></content>
       <categories>
-        <category>使用教程</category>
+        <category>学习笔记</category>
       </categories>
       <tags>
-        <tag>Caffe</tag>
         <tag>深度学习</tag>
         <tag>Win10</tag>
+        <tag>TensorFlow2</tag>
       </tags>
   </entry>
   <entry>
