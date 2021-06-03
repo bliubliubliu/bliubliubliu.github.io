@@ -28,7 +28,7 @@
 <meta property="og:description" content="1、安装CUDA 安装CUDA前需要先安装好Visual Studio 2013；  通过控制面板-&gt;硬件和声音-&gt;NVIDIA控制面板-&gt;帮助-&gt;系统信息-&gt;组件-&gt;3D设置-&gt;NVCUDA.DLL对应的产品名称，查看本机对应的CUDA版本，然后下载对应版本的CUDA；">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-10-02T01:54:26.000Z">
-<meta property="article:modified_time" content="2020-10-13T09:53:16.588Z">
+<meta property="article:modified_time" content="2021-06-03T14:15:02.767Z">
 <meta property="article:author" content="Leif">
 <meta property="article:tag" content="Caffe">
 <meta property="article:tag" content="深度学习">
@@ -217,7 +217,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-13 17:53:16" itemprop="dateModified" datetime="2020-10-13T17:53:16+08:00">2020-10-13</time>
+                <time title="修改时间：2021-06-03 22:15:02" itemprop="dateModified" datetime="2021-06-03T22:15:02+08:00">2021-06-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -270,12 +270,9 @@
 <a id="more"></a>
 
 <ol start="3">
-<li><p>下载地址：<a href="https://developer.nvidia.com/cuda-downloads" target="_blank" rel="noopener">https://developer.nvidia.com/cuda-downloads</a></p>
-</li>
-<li><p>确保安装了Visual Studio 2013后，再安装CUDA。</p>
-</li>
-<li><p>安装完成后，把CUDA的安装目录（比如我的就是C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0）下的bin和lib\x64地址添加到Path环境变量中。</p>
-</li>
+<li>下载地址：<a href="https://developer.nvidia.com/cuda-downloads" target="_blank" rel="noopener">https://developer.nvidia.com/cuda-downloads</a></li>
+<li>确保安装了Visual Studio 2013后，再安装CUDA。</li>
+<li>安装完成后，把CUDA的安装目录（比如我的就是C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0）下的bin、lib\x64、libnvvp、include和extras\CUPTI\lib64目录添加到系统环境变量Path中。</li>
 </ol>
 <h3 id="2、安装cuDNN"><a href="#2、安装cuDNN" class="headerlink" title="2、安装cuDNN"></a>2、安装cuDNN</h3><ol>
 <li>根据CUDA的版本下载对应版本的的cuDNN（需要注册NVIDIA开发者账户）；</li>

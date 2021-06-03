@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.leifyan.cn/2020/10/02/Caffe%E5%AE%89%E8%A3%85-Win10-GPU/</loc>
+    <lastmod>2021-06-03</lastmod>
+  </url>
+  <url>
     <loc>https://www.leifyan.cn/2021/03/24/Win10%E5%B9%B3%E5%8F%B0%E8%AE%AD%E7%BB%83Yolo-Fastest%E6%A8%A1%E5%9E%8B%E5%85%A8%E6%B5%81%E7%A8%8B/</loc>
     <lastmod>2021-04-12</lastmod>
   </url>
@@ -39,10 +43,6 @@
   <url>
     <loc>https://www.leifyan.cn/2020/10/16/Win10%E7%8E%AF%E5%A2%83%E4%B8%8B%E4%BB%A5%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%96%B9%E5%BC%8F%E8%B0%83%E7%94%A8Caffe/</loc>
     <lastmod>2020-10-16</lastmod>
-  </url>
-  <url>
-    <loc>https://www.leifyan.cn/2020/10/02/Caffe%E5%AE%89%E8%A3%85-Win10-GPU/</loc>
-    <lastmod>2020-10-13</lastmod>
   </url>
   <url>
     <loc>https://www.leifyan.cn/2020/08/29/MySQL%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>

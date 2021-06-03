@@ -720,12 +720,9 @@ pred_item=index_to_item[np.argmax(pred[1][0])]</code>这里求最大值索引是
 <a id="more"></a>
 
 <ol start="3">
-<li><p>下载地址：<a href="https://developer.nvidia.com/cuda-downloads" target="_blank" rel="noopener">https://developer.nvidia.com/cuda-downloads</a></p>
-</li>
-<li><p>确保安装了Visual Studio 2013后，再安装CUDA。</p>
-</li>
-<li><p>安装完成后，把CUDA的安装目录（比如我的就是C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0）下的bin和lib\x64地址添加到Path环境变量中。</p>
-</li>
+<li>下载地址：<a href="https://developer.nvidia.com/cuda-downloads" target="_blank" rel="noopener">https://developer.nvidia.com/cuda-downloads</a></li>
+<li>确保安装了Visual Studio 2013后，再安装CUDA。</li>
+<li>安装完成后，把CUDA的安装目录（比如我的就是C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0）下的bin、lib\x64、libnvvp、include和extras\CUPTI\lib64目录添加到系统环境变量Path中。</li>
 </ol>
 <h3 id="2、安装cuDNN"><a href="#2、安装cuDNN" class="headerlink" title="2、安装cuDNN"></a>2、安装cuDNN</h3><ol>
 <li>根据CUDA的版本下载对应版本的的cuDNN（需要注册NVIDIA开发者账户）；</li>
