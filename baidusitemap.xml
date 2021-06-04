@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.leifyan.cn/2021/06/03/Ubuntu%E7%BC%96%E8%AF%91OpenCV4-4-0-opencv-contrib-%E5%B8%A6CUDA/</loc>
+    <lastmod>2021-06-04</lastmod>
+  </url>
+  <url>
+    <loc>https://www.leifyan.cn/2021/06/03/Win10%E7%BC%96%E8%AF%91OpenCV4-4-0-opencv-contrib-%E5%B8%A6CUDA/</loc>
+    <lastmod>2021-06-04</lastmod>
+  </url>
+  <url>
     <loc>https://www.leifyan.cn/2020/10/02/Caffe%E5%AE%89%E8%A3%85-Win10-GPU/</loc>
     <lastmod>2021-06-03</lastmod>
   </url>

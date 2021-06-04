@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/LBT-300x300.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/LBT-300x300.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/LBT-300x300.png">
+  <link rel="mask-icon" href="/images/LBT-300x300.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.leifyan.cn","root":"/","scheme":"Mist","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文方法是用在Jetson Nano开发板上的，开发板提供的官方系统镜像中，安装的是OpenCV4.1.1，在调用TensorFlow2的模型时有问题，于是手动编译OpenCV4.4.0进行测试，发现可行。下面介绍OpenCV4.4.0的编译安装过程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu编译OpenCV4.4.0+opencv_contrib(带CUDA)">
+<meta property="og:url" content="https://www.leifyan.cn/2021/06/03/Ubuntu%E7%BC%96%E8%AF%91OpenCV4-4-0-opencv-contrib-%E5%B8%A6CUDA/">
+<meta property="og:site_name" content="Leif的博客">
+<meta property="og:description" content="本文方法是用在Jetson Nano开发板上的，开发板提供的官方系统镜像中，安装的是OpenCV4.1.1，在调用TensorFlow2的模型时有问题，于是手动编译OpenCV4.4.0进行测试，发现可行。下面介绍OpenCV4.4.0的编译安装过程。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-03T14:19:40.000Z">
+<meta property="article:modified_time" content="2021-06-04T02:47:00.876Z">
+<meta property="article:author" content="Leif">
+<meta property="article:tag" content="OpenCV">
+<meta property="article:tag" content="opencv_contrib">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="CUDA">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://www.leifyan.cn/2021/06/03/Ubuntu%E7%BC%96%E8%AF%91OpenCV4-4-0-opencv-contrib-%E5%B8%A6CUDA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Ubuntu编译OpenCV4.4.0+opencv_contrib(带CUDA) | Leif的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Leif的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">18</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">8</span></a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">23</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.leifyan.cn/2021/06/03/Ubuntu%E7%BC%96%E8%AF%91OpenCV4-4-0-opencv-contrib-%E5%B8%A6CUDA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/sheep.PNG">
+      <meta itemprop="name" content="Leif">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Leif的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ubuntu编译OpenCV4.4.0+opencv_contrib(带CUDA)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-03 22:19:40" itemprop="dateCreated datePublished" datetime="2021-06-03T22:19:40+08:00">2021-06-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-04 10:47:00" itemprop="dateModified" datetime="2021-06-04T10:47:00+08:00">2021-06-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+            </span>
+
+          
+            
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读量: </span>
+              <span id="busuanzi_value_page_pv"></span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本文方法是用在Jetson Nano开发板上的，开发板提供的官方系统镜像中，安装的是OpenCV4.1.1，在调用TensorFlow2的模型时有问题，于是手动编译OpenCV4.4.0进行测试，发现可行。下面介绍OpenCV4.4.0的编译安装过程。</p>
+<a id="more"></a>
+
+<h3 id="1、环境准备"><a href="#1、环境准备" class="headerlink" title="1、环境准备"></a>1、环境准备</h3><ol>
+<li>按照开发板入门教程把CUDA和cudnn配置好</li>
+<li>确保安装了CMake</li>
+<li>下载<a href="https://github.com/opencv/opencv/tree/4.4.0" target="_blank" rel="noopener">OpenCV4.4.0</a></li>
+<li>下载对应版本的<a href="https://github.com/opencv/opencv_contrib/tree/4.4.0" target="_blank" rel="noopener">opencv_contrib</a></li>
+</ol>
+<h3 id="2、卸载旧版本OpenCV"><a href="#2、卸载旧版本OpenCV" class="headerlink" title="2、卸载旧版本OpenCV"></a>2、卸载旧版本OpenCV</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get purge libopencv*</span><br><span class="line">sudo apt autoremove</span><br><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、安装依赖项"><a href="#3、安装依赖项" class="headerlink" title="3、安装依赖项"></a>3、安装依赖项</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essential</span><br><span class="line">sudo apt-get install libglew-dev libtiff5-dev zlib1g-dev libjpeg-dev \ </span><br><span class="line">	libavcodec-dev libavformat-dev libavutil-dev libpostproc-dev \</span><br><span class="line">	libswscale-dev libeigen3-dev libtbb-dev libgtk2.0-dev pkg-config libpng-dev	</span><br><span class="line">sudo apt-get install libatlas-base-dev gfortran</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt upgrade</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、编译安装"><a href="#4、编译安装" class="headerlink" title="4、编译安装"></a>4、编译安装</h3><ol>
+<li><p>新建一个目录opencv4,把OpenCV4.4.0的源码解压到里面，然后再在opencv4中新建一个opencv_contrib目录，将opencv_contrib4.4.0的源码解压到里面</p>
+</li>
+<li><p>cd到yourpath/opencv4，运行以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">cmake \</span><br><span class="line">-DCMAKE_BUILD_TYPE=Release \</span><br><span class="line">-DBUILD_PNG=OFF \</span><br><span class="line">-DBUILD_TIFF=OFF \</span><br><span class="line">-DBUILD_TBB=OFF \</span><br><span class="line">-DBUILD_JPEG=OFF \</span><br><span class="line">-DBUILD_JASPER=OFF \</span><br><span class="line">-DBUILD_ZLIB=OFF \</span><br><span class="line">-DBUILD_EXAMPLES=OFF \</span><br><span class="line">-DBUILD_opencv_java=OFF \</span><br><span class="line">-DBUILD_opencv_python2=OFF \</span><br><span class="line">-DBUILD_opencv_python3=ON \</span><br><span class="line">-DENABLE_PRECOMPILED_HEADERS=OFF \</span><br><span class="line">-DOPENCV_GENERATE_PKGCONFIG=ON \</span><br><span class="line">-DWITH_OPENCL=OFF \</span><br><span class="line">-DWITH_OPENMP=OFF \</span><br><span class="line">-DWITH_FFMPEG=ON \</span><br><span class="line">-DWITH_GSTREAMER=OFF \</span><br><span class="line">-DWITH_GSTREAMER_0_10=OFF \</span><br><span class="line">-DWITH_CUDA=ON \</span><br><span class="line">-DOPENCV_DNN_CUDA=ON \</span><br><span class="line">-DWITH_GTK=ON \</span><br><span class="line">-DWITH_VTK=OFF \</span><br><span class="line">-DWITH_TBB=ON \</span><br><span class="line">-DWITH_1394=OFF \</span><br><span class="line">-DWITH_OPENEXR=OFF \</span><br><span class="line">-DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-10.2 \</span><br><span class="line">-DCUDA_ARCH_BIN=5.3 \</span><br><span class="line">-DCUDA_ARCH_PTX="" \</span><br><span class="line">-DINSTALL_C_EXAMPLES=OFF \</span><br><span class="line">-DOPENCV_ENABLE_NONFREE=ON \</span><br><span class="line">-DINSTALL_TESTS=OFF \</span><br><span class="line">-DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules \</span><br><span class="line">-DCMAKE_INSTALL_PREFIX=/usr/local ..</span><br><span class="line">sudo make -j4</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
+<p>cmake的配置选项“-DOPENCV_GENERATE_PKGCONFIG=ON”是为了编译时生成opencv4.pc文件，这个文件可以把opencv库的各种信息告诉pkg-config，“-DWITH_CUDA=ON”和“-DOPENCV_DNN_CUDA=ON”是为了编译CUDA相关代码，之后就可以用dnn模块调用GPU了，“-DCMAKE_INSTALL_PREFIX=/usr/local”指定了库的安装路径前缀，之后库文件就会被安装在/usr/local/lib中，头文件被放在/usr/local/include/opencv4/opencv2/中，这里的“/usr/local”其实也是默认值。</p>
+<p>编译过程比较长，耐心等待即可。</p>
+<h3 id="5、配置系统环境变量"><a href="#5、配置系统环境变量" class="headerlink" title="5、配置系统环境变量"></a>5、配置系统环境变量</h3><ol>
+<li><p>当操作系统加载动态库时，会首先去读取/etc/ld.so.conf文件，然后进入/etc/ld.so.conf.d目录下，读取里面所有的配置文件，这些配置文件内记载着库的路径，这样就可以找到动态库，因此需要将OpenCV库目录添加到/etc/ld.so.conf.d/opencv.conf：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/ld.so.conf.d/opencv.conf</span><br></pre></td></tr></table></figure>
+
+<p>用上面的命令创建\打开<code>opencv.conf</code>后，在文件末尾添加：<code>/usr/local/lib</code></p>
+<p>然后使用下面的命令使配置生效：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ldconfig</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+</li>
+</ol>
+<ol start="2">
+<li><p>pkg-config 能通过库提供的 .pc 文件获得库的各种必要信息，包括版本信息、编译和连接需要的参数等。通过 pkg-config 提供的参数–cflags, –libs，将所需信息提取出来供编译和连接使用。当pkg-config运行时，会在其配置目录下查找.pc文件，找到对应的文件就读取它，pkg-config的默认路径是： /usr/lib/pkgconfig/和/usr/share/pkgconfig/，这里我们为它添加一个新的路径<code>/usr/local/lib/pkgconfig</code>，首先在/usr/local/lib/目录中新建pkgconfig目录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/lib</span><br><span class="line">mkdir pkgconfig</span><br></pre></td></tr></table></figure>
+
+<p>然后把这个目录加入PKG_CONFIG_PATH ,首先打开文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/bash.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>在文件末尾加入:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PKG_CONFIG_PATH&#x3D;$PKG_CONFIG_PATH:&#x2F;usr&#x2F;local&#x2F;lib&#x2F;pkgconfig </span><br><span class="line">export PKG_CONFIG_PATH</span><br></pre></td></tr></table></figure>
+
+<p>保存退出后，更新系统环境变量：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/bash.bashrc</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="6、验证"><a href="#6、验证" class="headerlink" title="6、验证"></a>6、验证</h3><p>在终端输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">opencv_version</span><br></pre></td></tr></table></figure>
+
+<p>应当出现OpenCV版本号。</p>
+<p>在终端输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkg-config opencv4 --modversion</span><br></pre></td></tr></table></figure>
+
+<p>也应当出现OpenCV版本号。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Leif 支付宝">
+        <p>支付宝</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Leif 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Leif
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://www.leifyan.cn/2021/06/03/Ubuntu%E7%BC%96%E8%AF%91OpenCV4-4-0-opencv-contrib-%E5%B8%A6CUDA/" title="Ubuntu编译OpenCV4.4.0+opencv_contrib(带CUDA)">https://www.leifyan.cn/2021/06/03/Ubuntu编译OpenCV4-4-0-opencv-contrib-带CUDA/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+            <div class="social-item">
+              <a target="_blank" class="social-link" href="/images/微信.jpg">
+                <span class="icon">
+                  <i class="fa fa-wechat"></i>
+                </span>
+
+                <span class="label">WeChat</span>
+              </a>
+            </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/OpenCV/" rel="tag"><i class="fa fa-tag"></i> OpenCV</a>
+              <a href="/tags/opencv-contrib/" rel="tag"><i class="fa fa-tag"></i> opencv_contrib</a>
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+              <a href="/tags/CUDA/" rel="tag"><i class="fa fa-tag"></i> CUDA</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/03/Win10%E7%BC%96%E8%AF%91OpenCV4-4-0-opencv-contrib-%E5%B8%A6CUDA/" rel="prev" title="Win10编译OpenCV4.4.0+opencv_contrib(带CUDA)">
+      <i class="fa fa-chevron-left"></i> Win10编译OpenCV4.4.0+opencv_contrib(带CUDA)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、环境准备"><span class="nav-number">1.</span> <span class="nav-text">1、环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、卸载旧版本OpenCV"><span class="nav-number">2.</span> <span class="nav-text">2、卸载旧版本OpenCV</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、安装依赖项"><span class="nav-number">3.</span> <span class="nav-text">3、安装依赖项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、编译安装"><span class="nav-number">4.</span> <span class="nav-text">4、编译安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、配置系统环境变量"><span class="nav-number">5.</span> <span class="nav-text">5、配置系统环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、验证"><span class="nav-number">6.</span> <span class="nav-text">6、验证</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Leif"
+      src="/images/sheep.PNG">
+  <p class="site-author-name" itemprop="name">Leif</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Leif</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">227k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:27</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.7.1
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        总访客数: <span id="busuanzi_value_site_uv"></span>
+      </span>
+    <span class="post-meta-divider">|</span>
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        总访问量: <span id="busuanzi_value_site_pv"></span>
+      </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"scale":0.95,"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":200,"height":400,"vOffset":10},"mobile":{"show":true}});</script></body>
+</html>

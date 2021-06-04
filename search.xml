@@ -1,6 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Ubuntu编译OpenCV4.4.0+opencv_contrib(带CUDA)</title>
+    <url>/2021/06/03/Ubuntu%E7%BC%96%E8%AF%91OpenCV4-4-0-opencv-contrib-%E5%B8%A6CUDA/</url>
+    <content><![CDATA[<p>本文方法是用在Jetson Nano开发板上的，开发板提供的官方系统镜像中，安装的是OpenCV4.1.1，在调用TensorFlow2的模型时有问题，于是手动编译OpenCV4.4.0进行测试，发现可行。下面介绍OpenCV4.4.0的编译安装过程。</p>
+<a id="more"></a>
+
+<h3 id="1、环境准备"><a href="#1、环境准备" class="headerlink" title="1、环境准备"></a>1、环境准备</h3><ol>
+<li>按照开发板入门教程把CUDA和cudnn配置好</li>
+<li>确保安装了CMake</li>
+<li>下载<a href="https://github.com/opencv/opencv/tree/4.4.0" target="_blank" rel="noopener">OpenCV4.4.0</a></li>
+<li>下载对应版本的<a href="https://github.com/opencv/opencv_contrib/tree/4.4.0" target="_blank" rel="noopener">opencv_contrib</a></li>
+</ol>
+<h3 id="2、卸载旧版本OpenCV"><a href="#2、卸载旧版本OpenCV" class="headerlink" title="2、卸载旧版本OpenCV"></a>2、卸载旧版本OpenCV</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get purge libopencv*</span><br><span class="line">sudo apt autoremove</span><br><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、安装依赖项"><a href="#3、安装依赖项" class="headerlink" title="3、安装依赖项"></a>3、安装依赖项</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install build-essential</span><br><span class="line">sudo apt-get install libglew-dev libtiff5-dev zlib1g-dev libjpeg-dev \ </span><br><span class="line">	libavcodec-dev libavformat-dev libavutil-dev libpostproc-dev \</span><br><span class="line">	libswscale-dev libeigen3-dev libtbb-dev libgtk2.0-dev pkg-config libpng-dev	</span><br><span class="line">sudo apt-get install libatlas-base-dev gfortran</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt upgrade</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、编译安装"><a href="#4、编译安装" class="headerlink" title="4、编译安装"></a>4、编译安装</h3><ol>
+<li><p>新建一个目录opencv4,把OpenCV4.4.0的源码解压到里面，然后再在opencv4中新建一个opencv_contrib目录，将opencv_contrib4.4.0的源码解压到里面</p>
+</li>
+<li><p>cd到yourpath/opencv4，运行以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">cmake \</span><br><span class="line">-DCMAKE_BUILD_TYPE=Release \</span><br><span class="line">-DBUILD_PNG=OFF \</span><br><span class="line">-DBUILD_TIFF=OFF \</span><br><span class="line">-DBUILD_TBB=OFF \</span><br><span class="line">-DBUILD_JPEG=OFF \</span><br><span class="line">-DBUILD_JASPER=OFF \</span><br><span class="line">-DBUILD_ZLIB=OFF \</span><br><span class="line">-DBUILD_EXAMPLES=OFF \</span><br><span class="line">-DBUILD_opencv_java=OFF \</span><br><span class="line">-DBUILD_opencv_python2=OFF \</span><br><span class="line">-DBUILD_opencv_python3=ON \</span><br><span class="line">-DENABLE_PRECOMPILED_HEADERS=OFF \</span><br><span class="line">-DOPENCV_GENERATE_PKGCONFIG=ON \</span><br><span class="line">-DWITH_OPENCL=OFF \</span><br><span class="line">-DWITH_OPENMP=OFF \</span><br><span class="line">-DWITH_FFMPEG=ON \</span><br><span class="line">-DWITH_GSTREAMER=OFF \</span><br><span class="line">-DWITH_GSTREAMER_0_10=OFF \</span><br><span class="line">-DWITH_CUDA=ON \</span><br><span class="line">-DOPENCV_DNN_CUDA=ON \</span><br><span class="line">-DWITH_GTK=ON \</span><br><span class="line">-DWITH_VTK=OFF \</span><br><span class="line">-DWITH_TBB=ON \</span><br><span class="line">-DWITH_1394=OFF \</span><br><span class="line">-DWITH_OPENEXR=OFF \</span><br><span class="line">-DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-10.2 \</span><br><span class="line">-DCUDA_ARCH_BIN=5.3 \</span><br><span class="line">-DCUDA_ARCH_PTX="" \</span><br><span class="line">-DINSTALL_C_EXAMPLES=OFF \</span><br><span class="line">-DOPENCV_ENABLE_NONFREE=ON \</span><br><span class="line">-DINSTALL_TESTS=OFF \</span><br><span class="line">-DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules \</span><br><span class="line">-DCMAKE_INSTALL_PREFIX=/usr/local ..</span><br><span class="line">sudo make -j4</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
+<p>cmake的配置选项“-DOPENCV_GENERATE_PKGCONFIG=ON”是为了编译时生成opencv4.pc文件，这个文件可以把opencv库的各种信息告诉pkg-config，“-DWITH_CUDA=ON”和“-DOPENCV_DNN_CUDA=ON”是为了编译CUDA相关代码，之后就可以用dnn模块调用GPU了，“-DCMAKE_INSTALL_PREFIX=/usr/local”指定了库的安装路径前缀，之后库文件就会被安装在/usr/local/lib中，头文件被放在/usr/local/include/opencv4/opencv2/中，这里的“/usr/local”其实也是默认值。</p>
+<p>编译过程比较长，耐心等待即可。</p>
+<h3 id="5、配置系统环境变量"><a href="#5、配置系统环境变量" class="headerlink" title="5、配置系统环境变量"></a>5、配置系统环境变量</h3><ol>
+<li><p>当操作系统加载动态库时，会首先去读取/etc/ld.so.conf文件，然后进入/etc/ld.so.conf.d目录下，读取里面所有的配置文件，这些配置文件内记载着库的路径，这样就可以找到动态库，因此需要将OpenCV库目录添加到/etc/ld.so.conf.d/opencv.conf：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/ld.so.conf.d/opencv.conf</span><br></pre></td></tr></table></figure>
+
+<p>用上面的命令创建\打开<code>opencv.conf</code>后，在文件末尾添加：<code>/usr/local/lib</code></p>
+<p>然后使用下面的命令使配置生效：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo ldconfig</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+</li>
+</ol>
+<ol start="2">
+<li><p>pkg-config 能通过库提供的 .pc 文件获得库的各种必要信息，包括版本信息、编译和连接需要的参数等。通过 pkg-config 提供的参数–cflags, –libs，将所需信息提取出来供编译和连接使用。当pkg-config运行时，会在其配置目录下查找.pc文件，找到对应的文件就读取它，pkg-config的默认路径是： /usr/lib/pkgconfig/和/usr/share/pkgconfig/，这里我们为它添加一个新的路径<code>/usr/local/lib/pkgconfig</code>，首先在/usr/local/lib/目录中新建pkgconfig目录：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /usr/local/lib</span><br><span class="line">mkdir pkgconfig</span><br></pre></td></tr></table></figure>
+
+<p>然后把这个目录加入PKG_CONFIG_PATH ,首先打开文件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/bash.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>在文件末尾加入:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PKG_CONFIG_PATH&#x3D;$PKG_CONFIG_PATH:&#x2F;usr&#x2F;local&#x2F;lib&#x2F;pkgconfig </span><br><span class="line">export PKG_CONFIG_PATH</span><br></pre></td></tr></table></figure>
+
+<p>保存退出后，更新系统环境变量：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source /etc/bash.bashrc</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="6、验证"><a href="#6、验证" class="headerlink" title="6、验证"></a>6、验证</h3><p>在终端输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">opencv_version</span><br></pre></td></tr></table></figure>
+
+<p>应当出现OpenCV版本号。</p>
+<p>在终端输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pkg-config opencv4 --modversion</span><br></pre></td></tr></table></figure>
+
+<p>也应当出现OpenCV版本号。</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>OpenCV</tag>
+        <tag>opencv_contrib</tag>
+        <tag>Linux</tag>
+        <tag>CUDA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Win10编译OpenCV4.4.0+opencv_contrib(带CUDA)</title>
+    <url>/2021/06/03/Win10%E7%BC%96%E8%AF%91OpenCV4-4-0-opencv-contrib-%E5%B8%A6CUDA/</url>
+    <content><![CDATA[<p>在使用OpenCV4.4.0的dnn模块调用TensorFlow2训练好的模型时发现，官网下载的发布版没有编译CUDA相关代码，需要手动添加CUDA选项，重新编译OpenCV的源码，才能调用GPU进行模型前向推理。经过多次测试，推荐使用VS2017编译。</p>
+<a id="more"></a>
+
+<h3 id="1、环境准备"><a href="#1、环境准备" class="headerlink" title="1、环境准备"></a>1、环境准备</h3><ol>
+<li>安装VS2017（要求先于安装CUDA）</li>
+<li>安装<a href="[Caffe安装（Win10+GPU）_定个小目标先的博客-CSDN博客](https://blog.csdn.net/weixin_46288017/article/details/108904126)">CUDA和cuDNN</a></li>
+<li>安装<a href="https://cmake.org/download/" target="_blank" rel="noopener">CMake</a>(推荐3.17以上的版本)</li>
+<li>下载[OpenCV4.4.0](<a href="https://github.com/opencv/opencv/tree/4.4.0" target="_blank" rel="noopener">GitHub - opencv/opencv at 4.4.0</a>)</li>
+<li>下载对应版本的<a href="https://github.com/opencv/opencv_contrib/tree/4.4.0" target="_blank" rel="noopener">opencv_contrib</a></li>
+</ol>
+<h3 id="2、设置文件目录"><a href="#2、设置文件目录" class="headerlink" title="2、设置文件目录"></a>2、设置文件目录</h3><p>为了便于描述，笔者将按照自己的文件目录设置介绍后续过程，在此说明笔者的目录设置。</p>
+<ol>
+<li>在一个熟悉的目录中，新建一个文件夹opencv4，把opencv4.4.0的源码解压到此文件夹；</li>
+<li>然后再在opencv4文件夹中新建一个opencv_contrib文件夹，把opencv_contrib4.4.0的源码解压到里面；</li>
+<li>最后在opencv4文件夹中新建一个build文件夹。</li>
+</ol>
+<h3 id="3、用CMake生成VS2017工程文件"><a href="#3、用CMake生成VS2017工程文件" class="headerlink" title="3、用CMake生成VS2017工程文件"></a>3、用CMake生成VS2017工程文件</h3><h4 id="1-设置源码和构建路径"><a href="#1-设置源码和构建路径" class="headerlink" title="1.设置源码和构建路径"></a>1.设置源码和构建路径</h4><p>打开CMake，“Where is the source code:”选择yourpath\opencv4,“Where to build the binaries:”选择yourpath\opencv4\build</p>
+<h4 id="2-配置构建选项"><a href="#2-配置构建选项" class="headerlink" title="2.配置构建选项"></a>2.配置构建选项</h4><ol>
+<li>点击“Configure”配置“Specify the generator for this project”为VS2017，“Optional platform for generator”为x64，然后点“Finish”结束</li>
+<li>之后CMake会进行初次配置，然后显示出很多可配置选项，接下来修改这些选项</li>
+<li>勾选“WITH_CUDA”、“OPENCV_DNN_CUDA”、“BUILD_opencv_world”</li>
+<li>搜索含“test”的选项，都不勾选，搜索含“python”的选项，都不勾选</li>
+<li>找到“OPENCV_EXTRA_MODULES_PATH”，设置为yourpath\opencv4\opencv_contrib\modules</li>
+<li>再次点击“Configure”，过程中会下载一些文件，可能会下载失败，可以参考<a href="https://blog.csdn.net/length85/article/details/103767475" target="_blank" rel="noopener">文章1</a>和<a href="https://blog.csdn.net/yapifeitu/article/details/106323853" target="_blank" rel="noopener">文章2</a>解决。</li>
+</ol>
+<h4 id="3-生成并打开VS工程"><a href="#3-生成并打开VS工程" class="headerlink" title="3.生成并打开VS工程"></a>3.生成并打开VS工程</h4><p>上一步完全没有错误后，依次点击“Generate”和“Open Project”即可打开生成的VS工程。</p>
+<h3 id="4、编译"><a href="#4、编译" class="headerlink" title="4、编译"></a>4、编译</h3><ol>
+<li>用VS2017打开上一步生成的工程以后，分别在Debug x64和Release x64模式下，生成整个解决方案，根据电脑配置的不同，每次编译预计会花费2~3个小时</li>
+<li>编译完成后，分别在Debug x64和Release x64模式下，仅生成INSTALL项目</li>
+</ol>
+<h3 id="5、移动编译好的OpenCV到合适的目录"><a href="#5、移动编译好的OpenCV到合适的目录" class="headerlink" title="5、移动编译好的OpenCV到合适的目录"></a>5、移动编译好的OpenCV到合适的目录</h3><p>上一步正常编译完成后，应该没有任何编译失败的项目，在yourpath\opencv4\build\install文件夹下就是发布版OpenCV的build文件夹中的内容，可以把它们移动到C盘。例如C:\Program Files\opencv4\build，下面以此路径为例继续介绍。</p>
+<h3 id="6、配置环境变量"><a href="#6、配置环境变量" class="headerlink" title="6、配置环境变量"></a>6、配置环境变量</h3><ol>
+<li>新建系统环境变量OpenCV_DIR，值为C:\Program Files\opencv4\build</li>
+<li>把C:\Program Files\opencv4\build\x64\vc15\bin添加到系统环境变量Path中</li>
+</ol>
+<h3 id="7、在VS2017中配置OpenCV"><a href="#7、在VS2017中配置OpenCV" class="headerlink" title="7、在VS2017中配置OpenCV"></a>7、在VS2017中配置OpenCV</h3><p>由于是用VS2017编译的OpenCV，在C:\Program Files\opencv4\build\x64\目录下只有vc15，只能用于配置VS2017</p>
+<ol>
+<li>用VS2017打开任意一个工程，打开“视图”-&gt;“属性管理器”，双击打开其中的“工程名”-&gt;”Debug | x64”-&gt;”Microsoft.Cpp.x64.user”</li>
+<li>选择“通用属性”-&gt;”VC++目录”，在“包含目录”中添加C:\Program Files\opencv4\build\include和C:\Program Files\opencv4\build\include\opencv2，在“库目录”中添加C:\Program Files\opencv4\build\x64\vc15\lib</li>
+<li>选择“通用属性”-&gt;”链接器”-&gt;“输入”，在“附加依赖项”中添加<code>opencv_world440d.lib</code>，其中的“440”表示版本为4.4.0，后面的“d”表示Debug版</li>
+<li>Release版本的配置也是类似，只是“附加依赖项”中添加的是不带“d”后缀的<code>opencv_world440.lib</code></li>
+</ol>
+<p>至此就完成了OpenCV4.4.0编译和配置。</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Win10</tag>
+        <tag>OpenCV</tag>
+        <tag>opencv_contrib</tag>
+        <tag>CUDA</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>TensorFlow2学习笔记</title>
     <url>/2021/04/10/TensorFlow2%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<p>本笔记是笔者在学习网易云课堂上日月光华老师的<a href="https://study.163.com/course/introduction/1004573006.htm" target="_blank" rel="noopener">Tensorflow深度学习入门与实战课程</a>时记录整理而来的，记录过程中难免出现错误，敬请指正。</p>
